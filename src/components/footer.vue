@@ -1,6 +1,6 @@
 <template>
-  <div>
-    222
+  <div class="main_footer">
+    <!-- 这里是底部 -->
   </div>
 </template>
 

@@ -1,27 +1,26 @@
 <template>
   <div>
-    <el-container>
-      <el-header>Header</el-header>
-      <el-container>
-        <el-aside width="200px">Aside</el-aside>
-        <el-container>
-          <el-main>Main</el-main>
-          <el-footer>Footer</el-footer>
-        </el-container>
-      </el-container>
-    </el-container>
+    <!-- 头部作为全局组件进行渲染 -->
+
+    <Main></Main>
   </div>
 </template>
-
 <script>
-  import header from "../components/header";
+  // import header from "../components/header";
   import aside from "../components/aside";
   import main from "../components/main";
-  import footer from "../components/footer";
-
+  // import footer from "../components/footer";
   export default {
     name: "home",
-
+    data(){
+      return {}
+    },
+    components:{
+      // Header:header,
+      Aside:aside,
+      Main:main,
+     
+    },
     comments: {}
   }
 </script>
@@ -33,7 +32,6 @@
     text-align: center;
     line-height: 60px;
   }
-
   .el-aside {
     background-color: #D3DCE6;
     color: #333;

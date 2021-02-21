@@ -4,10 +4,12 @@ import Vuex from "vuex"
 Vue.use(Vuex)
 
 
-export const state = {
-
-}
 
 export default new Vuex.Store({
-  state,
+  state:{counter:0},
+  mutations:{
+    increment(state){state.counter++},
+    increment(state){state.counter--},
+  }
+ 
 })
