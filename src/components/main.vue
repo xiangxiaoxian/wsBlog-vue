@@ -118,23 +118,22 @@
       <!-- 主内容 -->
     </div>
     <!-- <Slideshow /> -->
-    这里是热点
     <Hot/>
+    这里是热
   </div>
 </template>
 
 <script>
 // import Slideshow from "./slideshow";
 import hot from "./hot";
-import Hot from './hot.vue';
 import slideshow from "./slideshow.vue";
+import Hot from './hot'
 
 export default {
   components: {
-    // Slideshow: slideshow
+    // Slideshow: slideshow,
     Hot: hot,
-    Slideshow: slideshow,
-    Hot,
+    Slideshow: slideshow, 
   },
   data() {
     return {
