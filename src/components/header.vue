@@ -9,7 +9,7 @@
       background-color="#545c64"
       text-color="#fff"
     >
-      
+
       <el-menu-item index="1" style="width: 10%"><router-link :to="{ path: '/home' }">首页</router-link></el-menu-item >
       <el-menu-item index="2" style="width: 10%"><router-link :to="{ path: '/blog' }">博客</router-link></el-menu-item>
       <el-menu-item index="3" style="width: 10%" ><router-link :to="{ path: '/blogdetial' }">详情页</router-link></el-menu-item>
@@ -22,10 +22,12 @@
       >
       </el-input>
       <!-- <span class=" iconfon icon-sousuo"></span> -->
+      <!--若当前有用户登录，则不展示登录注册字样，展示登录用户头像等信息-->
       <el-menu-item
         index="5"
         style="width: 10%"
         :to="{ path: '/personalcenter' }"
+        v-if="this.$store.getters===null"
         ><router-link :to="{ path: '/login' }">登录/注册</router-link></el-menu-item
       >
       <el-menu-item index="6" style="width: 10%"><router-link :to="{ path: '/owner' }">个人中心</router-link></el-menu-item>
