@@ -51,6 +51,7 @@
         buttonText: "发送验证码",
         isDisabled: false, // 是否禁止点击发送验证码按钮
         flag: true,
+        valid: false,
       };
     },
     created() {
@@ -59,8 +60,9 @@
     methods: {
       // <!--提交登录-->
       submitForm(formName) {
+        this.checkData();
         this.$refs[formName].validate((valid) => {
-          if (valid) {
+          if (this.valid) {
             const _this = this
             setTimeout(() => {
               this.$axios.post('/login', this.user).then(res => {
@@ -83,6 +85,18 @@
           }
 
         });
+      },
+      /*检查账号密码是否为空*/
+      checkData() {
+        if (0 == this.user.username.length) {
+          alert("账号不能为空");
+          return;
+        } else if (0 == this.user.password.length) {
+          alert("密码不能为空");
+          return;
+        } else {
+          this.valid = true;
+        }
       },
       // <!--进入登录页-->
       gotoLogin() {
