@@ -7,8 +7,8 @@
       <el-footer><Footer></Footer> </el-footer>
     </el-container>
 
-    
-    
+
+
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     //是否显示头部
     this.currentPath=this.$route.path
     console.log(this.currentPath)
-    
+
   },
   components: {
     Header: header,
@@ -39,8 +39,8 @@ export default {
 #app {
   height: 700px;
   width: 100%;
-  background-color:#F6F6F6 ;
-  
+  /*background-color:#F6F6F6 ;*/
+
 }
 a{
   text-decoration: none;

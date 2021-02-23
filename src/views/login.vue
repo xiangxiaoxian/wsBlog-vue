@@ -1,40 +1,46 @@
 <template>
-  <div class="login">
-    <div class="login-wrapper">
-      <div id="login">
-        <p class="title">登录</p>
-        <el-form
-          :model="user"
-          status-icon
-          ref="user"
-          label-width="0"
-          class="demo-ruleForm"
-        >
-          <el-form-item prop="username">
-            <el-input
-              v-model="user.username"
-              auto-complete="off"
-              placeholder="请输入手机号/账号"
-            ></el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input
-              type="passwordword"
-              v-model="user.password"
-              auto-complete="off"
-              placeholder="输入密码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              type="primary"
-              @click="submitForm('user')"
-              style="width: 100%"
-            >登录
-            </el-button
-            >
-          </el-form-item>
-        </el-form>
+  <div>
+    <div class="backgroundAll">
+      <img :src='imgsrc'  alt="加载失败" />
+    </div>
+    <div class="login">
+      <div class="login-wrapper">
+        <div id="login">
+          <img :src="logo" alt="加载失败" style="width:60px">
+          <p class="title">登录</p>
+          <el-form
+            :model="user"
+            status-icon
+            ref="user"
+            label-width="0"
+            class="demo-ruleForm"
+          >
+            <el-form-item prop="username">
+              <el-input
+                v-model="user.username"
+                auto-complete="off"
+                placeholder="请输入手机号/账号"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input
+                type="passwordword"
+                v-model="user.password"
+                auto-complete="off"
+                placeholder="输入密码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="submitForm('user')"
+                style="width: 100%"
+              >登录
+              </el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </div>
   </div>
@@ -52,6 +58,8 @@
         isDisabled: false, // 是否禁止点击发送验证码按钮
         flag: true,
         valid: false,
+        imgsrc:require("../assets/images/yejing.jpg"),
+        logo:require("../assets/images/logo.png"),
       };
     },
     created() {
@@ -134,15 +142,15 @@
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: #fff;
+    /* background-color: #fff; */
   }
 
   #login {
     max-width: 340px;
-    margin: 60px auto;
-    background: #fff;
-    padding: 20px 40px;
-    border-radius: 10px;
+    margin: 300px 680px;
+    background:rgba(255, 255, 255, .2);
+    padding: 40px 60px;
+    border-radius: 30px;
     position: relative;
     z-index: 9;
   }
@@ -190,6 +198,19 @@
     border-color: #409eff;
     color: #fff;
   }
+  .backgroundAll img{
+    width:100%;
+    height:100%;
+    z-index:-1;
+    position: absolute;
+    top: 30px;
+    bottom: 0;
+  }
 
+  .front{
+    z-index:10;
+    position: absolute;
+
+  }
 
 </style>
