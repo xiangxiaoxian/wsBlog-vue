@@ -148,7 +148,7 @@
           nickName: "",
           email: "",
         },
-        validationCode:"",//后天回值验证码
+        validationCode:"",//后台回值验证码
         rules2: {
           password: [{validator: validatePass, trigger: "change"}],
           checkPass: [{validator: validatePass2, trigger: "change"}],
@@ -166,9 +166,10 @@
       // <!--发送验证码-->
       sendCode() {
         let email = this.user.email;
-        if (this.checkMobile(email)) {
-          this.$axios.post('/register/validation',this.user.email).then(res => {
-            this.validationCode=res
+        if (this.checkEmail(email)) {
+          this.$axios.post('/register/validation',this.user).then(res => {
+            alert(res.data.msg)
+            this.validationCode=res.data.data
           })
           let time = 60;
           this.buttonText = "已发送";
