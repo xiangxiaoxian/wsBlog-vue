@@ -1,15 +1,25 @@
 <template>
-  <div id="app">
+<div id="app-body">
+  <router-view name="header"></router-view>
+    <transition :name="transitionName">
+      <keep-alive>
+        <router-view class="view-router" v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view>
+    </transition>
+    
+  </div>
+
+
+<!-- 原来 -->
+  <!-- <div id="app">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2368587_9rvaeddnviv.css">
     <el-container>
       <el-header ><Header v-show="currentPath !=='/login'"></Header> </el-header>
       <el-main><router-view ></router-view></el-main>
       <el-footer><Footer></Footer> </el-footer>
     </el-container>
-
-
-
-  </div>
+  </div> -->
 </template>
 
 <script>

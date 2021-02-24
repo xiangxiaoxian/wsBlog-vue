@@ -5,80 +5,130 @@ import Router from 'vue-router'
 
 import Home from '../views/home'
 import Blog from '../views/blog'
-import blogdetial from '../views/blogdetial'
-import login from '../views/login'
-import register from '../views/register'
+import Blogdetial from '../views/blogdetial'
+import Login from '../views/login'
+import Register from '../views/register'
 import BlogAdd from '../views/blogAdd'
 import Owner from '../views/owner'
 import Message from '../views/message'
 
-
+import Header from '../components/header'
 
 
 Vue.use(Router)
-
 export default new Router({
-    mode: 'history',
-    base:process.env.base_url,
+  mode: 'history',
+  base: process.env.base_url,
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home
+      components: {
+        default: Home,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      components: {
+        default: Home,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/blog',
       name: '博客',
-      component: Blog
+      components: {
+        default: Blog,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/blogAdd',
       name: 'blogAdd',
-      component: BlogAdd
+      components: {
+        default: BlogAdd,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/blogdetial',
       name: '详情页',
-      component: blogdetial
+      components: {
+        default: Blogdetial,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: ()=>import("../views/register")
+      // component: ()=>import("../views/register")
+      components: {
+        default: Register,
+      },
+      meta: {
+        keepAlive: true
+      }
+
     },
     {
       path: '/login',
       name: 'login',
-      component: ()=>import("../views/login")
+      // component: ()=>import("../views/login")
+      components: {
+        default: Login,
+      },
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/personalCenter',
       name: 'personalCenter',
-      component: ()=>import("../views/personalCenter")
-    },{
+      component: () => import("../views/personalCenter")
+    }, {
       path: '/headerone',
       name: 'headerone',
-      component: ()=>import("../components/headerone")
+      component: () => import("../components/headerone")
     },
     {
       path: '/owner',
       name: 'owner',
-      component: ()=>import("../views/owner")
-
+      // component: ()=>import("../views/owner")
+      components: {
+        default: Owner,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/message',
       name: 'owner',
-      component: ()=>import("../views/message")
-
-    }
-
-    
-
+      components: {
+        default: Message,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
   ]
 })
