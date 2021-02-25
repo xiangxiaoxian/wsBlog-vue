@@ -1,5 +1,11 @@
 <template>
-  <div>
+<div class="forgetbox">
+  <div class="backgroundAll">
+
+      <img :src="imgsrc" alt="加载失败"/>
+
+    </div>
+  <div class="forgetPassword">
     <el-steps :active=steps align-center>
       <el-step title="步骤1" description="邮箱验证"></el-step>
       <el-step title="步骤2" description="重置密码"></el-step>
@@ -15,11 +21,14 @@
             placeholder="请输入邮箱"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="smscode" class="code">
+
+        <el-form-item  prop="smscode" class="code" >
+          <div class="codebetween">
           <el-input v-model="user.smscode" placeholder="验证码"></el-input>
           <el-button type="primary" :disabled="isDisabled" @click="sendCode"
           >{{ buttonText }}
           </el-button>
+          </div>
         </el-form-item>
         <el-form-item>
           <el-button
@@ -64,47 +73,24 @@
       </template>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
   export default {
     name: "forgotPassword",
-
     data() {
-      return {
-        //步骤进度条
-        steps: 1,
-        //后台回值验证码
-        validationCode: "",
-        //表格信息
-        user: {
-          id:"",
-          password: "",
-          checkPass: "",
-          smscode: "",
-          email: "",
-        },
-        rules2: {
-          password: [{validator: validatePass, trigger: "change"}],
-          checkPass: [{validator: validatePass2, trigger: "change"}],
-          smscode: [{validator: checkSmscode, trigger: "change"}],
-          email: [{validator: checkEmail, trigger: "change"}],
-        },
-        buttonText: "发送验证码",
-        isDisabled: false, // 是否禁止点击发送验证码按钮
-        flag: true,
-      }
-      let checkEmail = (rule, value, callback) => {
-        if (value === "") {
-          callback(new Error("请输入邮箱"));
-        } else if (!this.checkEmail(value)) {
-          callback(new Error("请输入正确的邮箱格式"));
-        } else {
-          callback();
-        }
-      };
-
-      //  <!--验证码是否为空-->
+        //邮箱格式校验
+      // let checkEmail = (rule, value, callback) => {
+      //   if (value === "") {
+      //     callback(new Error("请输入邮箱"));
+      //   } else if (!this.checkEmail(value)) {
+      //     callback(new Error("请输入正确的邮箱格式"));
+      //   } else {
+      //     callback();
+      //   }
+      // };
+       //  <!--验证码是否为空-->
       let checkSmscode = (rule, value, callback) => {
         if (value === "") {
           callback(new Error("请输入验证码"));
@@ -115,6 +101,36 @@
         }
       };
 
+      //账号
+    let checkUserName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入账号"));
+      } else if (!this.checkUserName(value)) {
+        callback(
+          new Error("只能以小写字母开头，且只能包含英文字母、数字、下划线")
+        );
+      } else {
+        callback();
+      }
+    };
+        //邮箱
+    let checkEmail = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入邮箱"));
+      } else if (!this.checkEmail(value)) {
+        callback(new Error("请输入正确的邮箱格式"));
+      } else {
+        callback();
+      }
+    };
+    // //昵称
+    let checknickName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入账号"));
+      } else {
+        callback();
+      }
+    };
       // <!--验证密码-->
       let validatePass = (rule, value, callback) => {
         if (value === "") {
@@ -136,7 +152,35 @@
           callback();
         }
       };
-
+      return {
+        //背景图片
+         imgsrc: require("../assets/images/001.jpg"),
+        //步骤进度条
+        steps: 1,
+        //后台回值验证码
+        validationCode: "",
+        //表格信息
+        user: {
+          id:"",
+          password: "",
+          checkPass: "",
+          smscode: "",
+          email: "",
+          nickName: "",
+          username: "",
+        },
+        rules2: {
+          password: [{validator: validatePass, trigger: "change"}],
+          checkPass: [{validator: validatePass2, trigger: "change"}],
+          smscode: [{validator: checkSmscode, trigger: "change"}],
+          email: [{validator: checkEmail, trigger: "change"}],
+        },
+        buttonText: "发送验证码",
+        isDisabled: false, // 是否禁止点击发送验证码按钮
+        flag: true,
+      }
+    
+     
     },
     methods: {
       //进度条变化
@@ -176,15 +220,15 @@
           });
         }
       },
-      // 验证邮箱
-      checkEmail(str) {
-        let re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9_\.\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if (re.test(str)) {
-          return true;
-        } else {
-          return false;
-        }
-      },
+     // 验证邮箱
+    checkEmail(str) {
+      let re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9_\.\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if (re.test(str)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
       //提交验证码后下一步
       submitSmSCode(){
         this.stepsAdd();
@@ -211,5 +255,93 @@
 </script>
 
 <style scoped>
+.forgetbox{
+  width: 100%;
+  height: 100%;
+  /* background: red; */
+}
+.forgetPassword{
+  width: 300px;
+  height: 40px;
+  /* border:1px solide red; */
+  margin:100px auto;
+
+}
+.codebetween{
+  display: flex;
+}
+.backgroundAll img {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+    /* top: 30px; */
+    bottom: 0;
+  }
+
+
+
+
+  .loading-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: #aedff8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-wrapper img {
+  position: absolute;
+  z-index: 1;
+}
+
+.register-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+#register {
+  max-width: 340px;
+  margin: 60px auto;
+  background: #fff;
+  padding: 20px 40px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 9;
+}
+
+.title {
+  font-size: 26px;
+  line-height: 50px;
+  font-weight: bold;
+  margin: 10px;
+  text-align: center;
+}
+
+.el-form-item {
+  text-align: center;
+}
+
+
+
+
+.code button {
+  margin-left: 20px;
+  width: 140px;
+  text-align: center;
+}
+
+.el-button--primary:focus {
+  background: #409eff;
+  border-color: #409eff;
+  color: #fff;
+}
 
 </style>
