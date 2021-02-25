@@ -3,7 +3,7 @@
     <div class="backgroundAll">
 
       <img :src="imgsrc" alt="加载失败" />
-   
+
     </div>
     <div class="login">
       <button class="returnHome">返回首页</button>
@@ -43,8 +43,8 @@
               </el-button>
             </el-form-item>
             <div class="registerStyle">
-              <p>注册邮箱</p>
-              <p>忘记密码?</p>
+              <p @click="toRegister">注册邮箱</p>
+              <p @click="forgotPassword">忘记密码?</p>
             </div>
           </el-form>
         </div>
@@ -112,12 +112,17 @@ export default {
         this.valid = true;
       }
     },
-    // <!--进入登录页-->
-    gotoLogin() {
-      this.$router.push({
-        path: "/login",
-      });
+    // <!--进入注册页-->
+    toRegister() {
+      const _this = this;
+      _this.$router.push("/register",);
     },
+
+    //进入忘记密码
+    forgotPassword(){
+      const _this = this;
+      _this.$router.push("/forgotPassword",);
+    }
     // 烟花背景
   },
 };

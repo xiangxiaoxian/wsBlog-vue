@@ -13,6 +13,7 @@ import Owner from '../views/owner'
 import Message from '../views/message'
 
 import Header from '../components/header'
+import ForgotPassword from '../views/forgotPassword'
 
 
 Vue.use(Router)
@@ -125,6 +126,17 @@ export default new Router({
       components: {
         default: Message,
         header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
+
+    {
+      path: '/forgotPassword',
+      name: 'forgotPassword',
+      components: {
+        default: ForgotPassword,
       },
       meta: {
         keepAlive: true
