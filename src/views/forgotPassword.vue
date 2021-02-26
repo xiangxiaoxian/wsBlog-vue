@@ -13,12 +13,18 @@
     </el-steps>
     <div>
       <template v-if="1==steps">
-        <el-form>
+        <el-form
+          :model="user"
+          status-icon
+          :rules="rules2"
+          ref="user"
+          label-width="0"
+          class="demo-ruleForm">
         <el-form-item prop="email">
           <el-input
             v-model="user.email"
             auto-complete="off"
-            placeholder="请输入邮箱"
+            placeholder="请输入注册时的邮箱"
           ></el-input>
         </el-form-item>
 
@@ -41,13 +47,19 @@
         </el-form>
       </template>
       <template v-if="2==steps">
-        <el-form>
+        <el-form
+          :model="user"
+          status-icon
+          :rules="rules2"
+          ref="user"
+          label-width="0"
+          class="demo-ruleForm">
         <el-form-item prop="password">
           <el-input
             type="passwordword"
             v-model="user.password"
             auto-complete="off"
-            placeholder="输入密码"
+            placeholder="请输入新密码"
           ></el-input>
         </el-form-item>
         <el-form-item prop="checkPass">
@@ -80,17 +92,7 @@
   export default {
     name: "forgotPassword",
     data() {
-        //邮箱格式校验
-      // let checkEmail = (rule, value, callback) => {
-      //   if (value === "") {
-      //     callback(new Error("请输入邮箱"));
-      //   } else if (!this.checkEmail(value)) {
-      //     callback(new Error("请输入正确的邮箱格式"));
-      //   } else {
-      //     callback();
-      //   }
-      // };
-       //  <!--验证码是否为空-->
+       //验证码是否为空
       let checkSmscode = (rule, value, callback) => {
         if (value === "") {
           callback(new Error("请输入验证码"));
@@ -101,18 +103,6 @@
         }
       };
 
-      //账号
-    let checkUserName = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入账号"));
-      } else if (!this.checkUserName(value)) {
-        callback(
-          new Error("只能以小写字母开头，且只能包含英文字母、数字、下划线")
-        );
-      } else {
-        callback();
-      }
-    };
         //邮箱
     let checkEmail = (rule, value, callback) => {
       if (value === "") {
@@ -179,8 +169,8 @@
         isDisabled: false, // 是否禁止点击发送验证码按钮
         flag: true,
       }
-    
-     
+
+
     },
     methods: {
       //进度条变化
@@ -241,6 +231,7 @@
             confirmButtonText: '确定',
           })
           if (200==res.data.code){
+            this.validationCode="";
             this.stepsAdd();
           }
         })
