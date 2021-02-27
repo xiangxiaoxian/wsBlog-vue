@@ -4,7 +4,7 @@
       <img :src="imgsrc" alt="加载失败" />
     </div>
     <div class="register-wrapper">
-      <button class="returnHome">返回首页</button>
+      <button class="returnHome" @click="toHome">返回首页</button>
       <div id="register">
         <p class="title">注册</p>
         <el-form
@@ -54,7 +54,7 @@
             ></el-input>
           </el-form-item>
 
-          
+
           <el-form-item prop="smscode" class="code">
             <el-input v-model="user.smscode" placeholder="验证码"></el-input>
             <el-button type="primary" :disabled="isDisabled" @click="sendCode"
@@ -251,6 +251,11 @@ export default {
         return false;
       }
     },
+  //返回首页
+  toHome(){
+    const _this = this;
+    _this.$router.push("/home");
+  }
   },
 };
 </script>

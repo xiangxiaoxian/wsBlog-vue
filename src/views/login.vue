@@ -6,7 +6,7 @@
 
     </div>
     <div class="login">
-      <button class="returnHome">返回首页</button>
+      <button class="returnHome" @click="toHome">返回首页</button>
       <div class="login-wrapper">
         <div id="login">
           <img :src="logo" alt="加载失败" style="width: 60px" />
@@ -90,6 +90,8 @@ export default {
                 const userInfo = res.data.data;
                 _this.$store.commit("SET_TOKEN", jwt);
                 _this.$store.commit("SET_USERINFO", userInfo);
+                this.user.password="";
+                this.user.username="";
                 _this.$router.push("/home");
               }
             });
@@ -115,15 +117,19 @@ export default {
     // <!--进入注册页-->
     toRegister() {
       const _this = this;
-      _this.$router.push("/register",);
+      _this.$router.push("/register");
     },
 
     //进入忘记密码
     forgotPassword(){
       const _this = this;
-      _this.$router.push("/forgotPassword",);
+      _this.$router.push("/forgotPassword");
+    },
+    //返回首页
+    toHome(){
+      const _this = this;
+      _this.$router.push("/home");
     }
-    // 烟花背景
   },
 };
 </script>
