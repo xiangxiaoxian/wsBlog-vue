@@ -2,36 +2,37 @@
   <div class="article">
     <div class="article_list">
       <div class="article_listone">
-        <h2>标题</h2>
-        <div>
-        <button>编辑</button>
-        <button>删除</button>
+        标题<el-input></el-input>
       </div>
-        
+      <div class="article_list_center">
+       分类：
+          <el-select v-model="value" placeholder="请选择分类">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+
       </div>
-      <div class="article_list_center">文章主要内容</div>
       <div class="article_listtwo">
-        <div class="article_listtwo_left">
-          <!-- 发表的人的头像 和昵称 -->
-          <span  id="people" class="el-icon-user-solid"></span>
-          Blink小姐姐
-        </div>
-        <div class="article_listtwo_center">本文转自 雷军科技</div>
-        <div class="article_listtwo_right">
-          <ul>
-            <li>日期</li>
-            <!-- <li class="iconfont icon-dianzan">点赞</li>
-            <li class="iconfont icon-yanjing">浏览量</li>
-            <li class="iconfont icon-icon-sms">信息</li> -->
-          </ul>
-        </div>
+        标签：
+        <el-select v-model="value" placeholder="请选择标签">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </div>
     </div>
     <div class="blog_makdown">
       <h3>写博客</h3>
       <mavon-editor v-moudle="value" />
       <p>
-        
+
       </p>
     </div>
   </div>
@@ -42,9 +43,34 @@ export default {
   data() {
     return {
       value: "",
+      lable:{
+        id:"",
+        lableName:"",
+        lableComments:"",
+      },
+      sort:{
+        id:"",
+        sortName:"",
+        sortComments:"",
+      },
+      article:{
+        id:"",
+        userId:"",
+        title:"",
+        content:"",
+      },
       defaultData: "preview",
     };
   },
+  mounted() {
+
+  },
+  methods:{
+    getLable(){
+      const _this=this;
+      _this.$axios.get("/")
+    }
+  }
 };
 </script>
 
@@ -75,7 +101,7 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: 2px 8px;
-  
+
   /* border: 1px solid #ccc; */
 }
 .article_list_center{
