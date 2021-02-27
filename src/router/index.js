@@ -8,12 +8,13 @@ import Blog from '../views/blog'
 import Blogdetial from '../views/blogdetial'
 import Login from '../views/login'
 import Register from '../views/register'
-import BlogAdd from '../views/blogAdd'
 import Owner from '../views/owner'
 import Message from '../views/message'
 
 import Header from '../components/header'
 import ForgotPassword from '../views/forgotPassword'
+
+import personalCenter from '../views/personalCenter'
 
 
 Vue.use(Router)
@@ -54,22 +55,22 @@ export default new Router({
         keepAlive: true
       }
     },
+    // {
+    //   path: '/blogAdd',
+    //   name: 'blogAdd',
+    //   components: {
+    //     default: BlogAdd,
+    //     header: Header
+    //   },
+    //   meta: {
+    //     keepAlive: true
+    //   }
+    // },
     {
-      path: '/blogAdd',
-      name: 'blogAdd',
+      path: '/personalCenter',
+      name: '个人中心',
       components: {
-        default: BlogAdd,
-        header: Header
-      },
-      meta: {
-        keepAlive: true
-      }
-    },
-    {
-      path: '/blogdetial',
-      name: '详情页',
-      components: {
-        default: Blogdetial,
+        default: personalCenter,
         header: Header
       },
       meta: {
@@ -99,11 +100,12 @@ export default new Router({
         keepAlive: true
       }
     },
+    // {
+    //   path: '/personalCenter',
+    //   name: 'personalCenter',
+    //   component: () => import("../views/personalCenter")
+    // }, 
     {
-      path: '/personalCenter',
-      name: 'personalCenter',
-      component: () => import("../views/personalCenter")
-    }, {
       path: '/headerone',
       name: 'headerone',
       component: () => import("../components/headerone")
@@ -131,7 +133,6 @@ export default new Router({
         keepAlive: true
       }
     },
-
     {
       path: '/forgotPassword',
       name: 'forgotPassword',

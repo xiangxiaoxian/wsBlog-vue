@@ -1,40 +1,106 @@
 <template>
-  <div class="blog_makdown">
-      <h1>请编辑你的内容：</h1>
-      <mavon-editor v-moudle="value"/> 
-      <p>编辑器的相关使用方法：
-          <!-- <ul>
-              <li>加粗 Ctrl + B </li>
-              <li>斜体 Ctrl + I</li>
-              <li>引用 Ctrl + Q</li>
-              <li>插入链接 Ctrl + L</li>
-              <li>插入代码 Ctrl + K</li>
-              <li>插入图片 Ctrl + G</li>
-              <li>提升标题 Ctrl + H</li>
-              <li>有序列表 Ctrl + O</li>
-              <li>无序列表 Ctrl + U</li>
-              <li>横线 Ctrl + R</li>
-              <li>撤销 Ctrl + Z</li>
-              <li>重做 Ctrl + Y</li>
-          </ul> -->
-          
-
-
-          </p>   
+  <div class="article">
+    <div class="article_list">
+      <div class="article_listone">
+        <h2>标题</h2>
+        <div>
+        <button>编辑</button>
+        <button>删除</button>
+      </div>
+        
+      </div>
+      <div class="article_list_center">文章主要内容</div>
+      <div class="article_listtwo">
+        <div class="article_listtwo_left">
+          <!-- 发表的人的头像 和昵称 -->
+          <span  id="people" class="el-icon-user-solid"></span>
+          Blink小姐姐
+        </div>
+        <div class="article_listtwo_center">本文转自 雷军科技</div>
+        <div class="article_listtwo_right">
+          <ul>
+            <li>日期</li>
+            <!-- <li class="iconfont icon-dianzan">点赞</li>
+            <li class="iconfont icon-yanjing">浏览量</li>
+            <li class="iconfont icon-icon-sms">信息</li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="blog_makdown">
+      <h3>写博客</h3>
+      <mavon-editor v-moudle="value" />
+      <p>
+        
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-      data(){
-          return{
-              value:'',
-              defaultData:'preview'
-          };
-      },
-  };
+export default {
+  data() {
+    return {
+      value: "",
+      defaultData: "preview",
+    };
+  },
+};
 </script>
 
 <style scoped>
+.article {
+  margin: 0 10%;
+  background-color: #fff;
+}
 
+.article_list{
+    margin-top: 6px;
+    width: 70%;
+    /* height: 80px; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 2);
+}
+
+.article .article_list:hover{
+    background:#F0F0F5;
+
+}
+.article_list .article_listone h2:hover{
+  color: orange;
+}
+
+.article_listone {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 8px;
+  
+  /* border: 1px solid #ccc; */
+}
+.article_list_center{
+    margin: 14px 8px;
+    padding: 2px 0;
+}
+.article_listtwo {
+    margin: 14px 8px;
+    padding: 2px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.article_listtwo_right ul {
+  display: flex;
+  padding:  0 10px;
+  margin: 0 8px;
+  /* background: red; */
+}
+.article_listtwo_right ul  li{
+  padding:  0 4px;
+  margin: 0 8px;
+  /* background: red; */
+}
+
+.article_listtwo_center {
+  color: silver;
+}
 </style>

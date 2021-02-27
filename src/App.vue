@@ -1,5 +1,6 @@
 <template>
 <div id="app-body">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2368587_e8xm0d0e9k.css">
   <router-view name="header"></router-view>
     <transition :name="transitionName">
       <keep-alive>
