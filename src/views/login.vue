@@ -11,7 +11,6 @@
         <div id="login">
           <img :src="logo" alt="加载失败" style="width: 60px" />
           <p class="title">登录</p>
-
           <el-form
             :model="user"
             status-icon

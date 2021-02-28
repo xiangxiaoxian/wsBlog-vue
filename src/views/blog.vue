@@ -76,32 +76,12 @@ export default {
   margin: 0 10%;
   background-color: #fff;
 }
-
-.article_list {
-  /* margin-top: 6px;
-  width: 70%;
- 
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 2); */
-}
-
-.article .article_list:hover {
-  /* background: #f0f0f5; */
-}
-.article_list .article_listone h2:hover {
-  /* color: orange; */
-}
-
 .article_listone  {
-  /* display: flex; */
   margin: 8px 10px;
   padding: 2px 4px; 
 }
 .article_listone  .articleInput{
-  /* display: flex; */
   margin: 8px 10px;
-  /* padding: 2px 4px;  */
 }
 
 .article_list_center {
@@ -112,19 +92,5 @@ export default {
    margin: 14px 8px;
   padding: 2px 0;
  
-}
-.article_listtwo_right ul {
-  /* display: flex;
-  padding: 0 10px;
-  margin: 0 8px; */
-  /* background: red; */
-}
-.article_listtwo_right ul li {
-  /* padding: 0 4px;
-  margin: 0 8px; */
-}
-
-.article_listtwo_center {
-  /* color: silver; */
 }
 </style>
