@@ -2,28 +2,28 @@
   <div class="article">
     <div class="article_list">
       <div class="article_listone">
-        标题:<el-input class="articleInput" style="width:600px" placeholder="请输入标题："></el-input>
+        标题:<el-input class="articleInput" style="width:600px" placeholder="请输入标题：" v-model="article.title"></el-input>
       </div>
       <div class="article_list_center">
         分类：
-        <el-select v-model="value" placeholder="请选择分类">
+        <el-select v-model="checkedSort" placeholder="请选择分类">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in sort"
+            :key="item.id"
+            :label="item.sortName"
+            :value="item.id"
           >
           </el-option>
         </el-select>
       </div>
       <div class="article_listtwo">
         标签：
-        <el-select v-model="value" placeholder="请选择标签">
+        <el-select v-model="checkedLable" placeholder="请选择标签">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in lable"
+            :key="item.id"
+            :label="item.lableName"
+            :value="item.id"
           >
           </el-option>
         </el-select>
@@ -31,9 +31,10 @@
     </div>
     <div class="blog_makdown">
       <h3>写博客</h3>
-      <mavon-editor v-moudle="value" />
+      <mavon-editor v-model="article.content" />
       <p></p>
     </div>
+    <el-button type="success" @click="submitArticle()">发表文章</el-button>
   </div>
 </template>
 
@@ -45,12 +46,10 @@ export default {
       lable: {
         id: "",
         lableName: "",
-        lableComments: "",
       },
       sort: {
         id: "",
         sortName: "",
-        sortComments: "",
       },
       article: {
         id: "",
@@ -58,15 +57,68 @@ export default {
         title: "",
         content: "",
       },
+      checkedSort:"",
+      checkedLable:"",
       defaultData: "preview",
     };
   },
-  mounted() {},
+  mounted() {
+    this.getLable();
+    this.getSort();
+  },
   methods: {
+    //获取所有标签
     getLable() {
       const _this = this;
-      _this.$axios.get("/");
+      _this.$axios.get("/lable").then(res=>{
+        this.lable=res.data.data
+      });
     },
+    //获取所有分类
+    getSort() {
+      const _this = this;
+      _this.$axios.get("/sort").then(res=>{
+        this.sort=res.data.data
+      });
+    },
+    submitArticle(){
+      const _this=this;
+      this.article.userId=_this.$store.getters.getUser.id;
+      if (""==this.article.title){
+        this.$alert("标题不能为空", {
+          confirmButtonText: "确定",
+        });
+        return false;
+      }else if (""==this.article.content){
+        this.$alert("内容不能为空", {
+          confirmButtonText: "确定",
+        });
+        return false;
+      }else if (""==this.checkedSort){
+        this.$alert("请选择分类", {
+          confirmButtonText: "确定",
+        });
+        return false;
+      }else if (""==this.checkedLable){
+        this.$alert("请选择标签", {
+          confirmButtonText: "确定",
+        });
+        return false;
+      }
+      _this.$axios.put("/article",{
+        article:this.article,
+        sortId:this.checkedSort,
+        lableId:this.checkedLable
+      }).then(res=>{
+        if (200==res.data.code){
+          this.article={};
+          this.checkedLable="";
+          this.checkedSort="";
+          _this.$router.push("home");
+        }
+      })
+    },
+
   },
 };
 </script>
@@ -78,19 +130,19 @@ export default {
 }
 .article_listone  {
   margin: 8px 10px;
-  padding: 2px 4px; 
+  padding: 2px 4px;
 }
 .article_listone  .articleInput{
   margin: 8px 10px;
 }
 
 .article_list_center {
-   margin: 14px 8px; 
-  padding: 2px 0; 
+   margin: 14px 8px;
+  padding: 2px 0;
 }
 .article_listtwo {
    margin: 14px 8px;
   padding: 2px 0;
- 
+
 }
 </style>

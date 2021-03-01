@@ -51,9 +51,9 @@
           v-if="this.$store.state.token !== ''"
         >
           <el-dropdown>
-            <span class="el-dropdown-link" id="dropdown-link1">
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
+            <el-menu-item>
+              <el-avatar :size="size" :src="imgsrc"></el-avatar>
+            </el-menu-item>
             <el-dropdown-menu slot="dropdown" class="dropdown-menu1">
               <el-dropdown-item class="el-icon-s-custom"
                 >我的资料</el-dropdown-item
@@ -67,9 +67,6 @@
             </el-dropdown-menu>
           </el-dropdown>
         </el-menu-item>
-      </el-menu-item>
-      <el-menu-item>       
-          <el-avatar :size="size" :src="imgsrc"></el-avatar>       
       </el-menu-item>
     </el-menu>
   </div>
@@ -105,10 +102,8 @@ export default {
         })
         .then((res) => {
           if (200 == res.data.code) {
-            this.$alert("退出成功", {
-              confirmButtonText: "确定",
-            });
             _this.$store.commit("REMOVE_USERINFO");
+            _this.$router.push("/login")
           }
         });
     },
