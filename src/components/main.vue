@@ -252,7 +252,6 @@ export default {
   margin: 0 10%;
   background-color: #fff;
 }
-
 .first_top {
   /* background-color: yellow; */
   /* width: 100px; */

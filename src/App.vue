@@ -47,6 +47,9 @@ export default {
 </script>
 
 <style>
+#app-body{
+  background-color: #F6F6F6;
+}
 #app {
   height: 700px;
   width: 100%;
