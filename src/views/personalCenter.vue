@@ -6,10 +6,13 @@
         <!-- 个人信息展示 -->
         <el-menu style="width: 200px">
           <el-menu-item index="1">
-            <span slot="title">个人中心</span>
+             <el-button type="text" @click="openCenter">个人中心</el-button>
+            <!-- <span slot="title">个人中心</span> -->
           </el-menu-item>
           <el-menu-item index="2">
-            <span slot="title">修改密码</span>
+            <!-- <span slot="title">修改密码</span> -->
+             <!-- <el-button type="text" @click="open">修改密码</el-button> -->
+             <el-button type="text" @click="openPassword">修改密码</el-button>
           </el-menu-item>
         </el-menu>
       </div>
@@ -39,7 +42,7 @@ export default {
   components: {
     Eiditor: eiditor,
   },
-  methods: {
+  
     methods: {
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
@@ -47,8 +50,39 @@ export default {
       handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
+     
+      openCenter() {
+        this.$alert('进入个人中心吗？', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+      },
+      openPassword() {
+        this.$confirm('是否修改密码?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '修改成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      }
+
+    
     },
-  },
+  
 };
 </script>
 <style scoped>
