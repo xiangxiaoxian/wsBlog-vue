@@ -28,7 +28,7 @@
 
       <!-- <span class=" iconfon icon-sousuo"></span> -->
       <el-menu-item index="6" style="width: 10%">
-        <router-link :to="{ path: '/owner' }">个人中心</router-link>
+        <router-link :to="{ path: '/personalCenter' }">个人中心</router-link>
       </el-menu-item>
       <el-menu-item class="writeblog" index="7" style="width: 10%">
         <router-link :to="{ path: '/message' }">创作中心</router-link>
