@@ -1,7 +1,5 @@
 <template>
 <div class="artics">
-
-
   <div class="article">
     <div class="article_title" :src="title">{{title}}标题</div>
     <div class="article_content">文章全网最全的Python学习路线图，看完直接劝退！慎入！</div>
@@ -37,7 +35,7 @@ export default {
     border-radius: 2px;
 }
 .article{
-    margin: 10px;
+    margin: 30px;
     padding: 2px;
 }
 .article_title {
