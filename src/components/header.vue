@@ -51,8 +51,8 @@
           v-if="this.$store.state.token !== ''"
         >
           <el-dropdown>
-            <el-menu-item>
-              <el-avatar :size="size" :src="imgsrc"></el-avatar>
+            <el-menu-item index="avatar">
+              <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+imgsrc+'.jpg')"></el-avatar>
             </el-menu-item>
             <el-dropdown-menu slot="dropdown" class="dropdown-menu1">
               <el-dropdown-item class="el-icon-s-custom"
@@ -84,8 +84,11 @@ export default {
       squareUrl:
         "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
       sizeList: ["large", "medium", "small"],
-      imgsrc: require("../assets/images/yejing.jpg"),
+      imgsrc: '',
     };
+  },
+  mounted() {
+    this.getAvatar();
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -107,6 +110,16 @@ export default {
           }
         });
     },
+    getAvatar(){
+      const _this=this;
+      let avatarUrl=_this.$store.getters.getUser.avatar;
+      if (avatarUrl==""||avatarUrl==null){
+        this.imgsrc=this.imgsrc+"001"
+      }
+      else {
+        this.imgsrc=this.imgsrc+avatarUrl;
+      }
+    }
   },
 };
 </script>
