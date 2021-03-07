@@ -109,7 +109,6 @@
 </template>
 <script>
   import eiditor from "../components/eiditor";
-  import slideshow from '../components/slideshow'
 
   export default {
     data() {
@@ -133,7 +132,6 @@
     },
     components: {
       Eiditor: eiditor,
-      Slideshow: slideshow
     },
     methods: {
       /*handleOpen(key, keyPath) {

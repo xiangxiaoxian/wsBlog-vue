@@ -113,12 +113,7 @@ export default {
     getAvatar(){
       const _this=this;
       let avatarUrl=_this.$store.getters.getUser.avatar;
-      if (avatarUrl==""||avatarUrl==null){
-        this.imgsrc=this.imgsrc+"001"
-      }
-      else {
-        this.imgsrc=this.imgsrc+avatarUrl;
-      }
+      this.imgsrc=this.imgsrc+avatarUrl;
     }
   },
 };
