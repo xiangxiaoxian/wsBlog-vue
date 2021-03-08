@@ -143,5 +143,15 @@ export default new Router({
         keepAlive: true
       }
     },
+    {
+      path: '/Blogdetial',
+      name: '',
+      components: {
+        default: Blogdetial,
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
   ]
 })

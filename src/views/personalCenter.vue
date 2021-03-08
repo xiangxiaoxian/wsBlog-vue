@@ -1,6 +1,7 @@
 <template>
   <!-- 新写的页面 -->
-  <div class="main">
+  
+  <div class="main">11111111111
     <div class="ownerCenten">
       <div class="ownerCenten_left">
         <!-- 个人信息展示 -->
@@ -134,13 +135,12 @@
       Eiditor: eiditor,
     },
     methods: {
-      /*handleOpen(key, keyPath) {
+      handleOpen(key, keyPath) {
           console.log(key, keyPath);
         },
         handleClose(key, keyPath) {
           console.log(key, keyPath);
-        },*/
-
+        },
       openCenter() {
         const _this = this;
         this.user.nickName = _this.$store.getters.getUser.nickName;

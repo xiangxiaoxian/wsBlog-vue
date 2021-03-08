@@ -1,12 +1,13 @@
 <template>
+<div>
 <div class="artics">
-  <div class="article" v-for="item in article">
+  <!-- <div class="article" v-for="item in article"> -->
     <div class="article_title" >{{item.title}}</div>
     <div class="article_content">{{item.content}}</div>
     <div class="article_bottom">
       <div class="article_author" >
 
-        <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+item.user.avatar+'.jpg')"></el-avatar>
+        <!-- <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+item.user.avatar+'.jpg')"></el-avatar> -->
         <i v-on:click="toUser(item.userId)">{{item.user.nickName}}</i>
           </div>
       <div class="article_time">发布时间:{{item.pubTime}}</div>
