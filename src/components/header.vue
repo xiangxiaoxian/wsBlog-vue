@@ -52,7 +52,7 @@
         >
           <el-dropdown>
             <el-menu-item index="avatar">
-              <!-- <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+imgsrc+'.jpg')"></el-avatar> -->
+              <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+imgsrc+'.jpg')"></el-avatar>
             </el-menu-item>
             <el-dropdown-menu slot="dropdown" class="dropdown-menu1">
               <el-dropdown-item class="el-icon-s-custom"
@@ -114,7 +114,7 @@ export default {
       const _this=this;
       let avatarUrl=_this.$store.getters.getUser.avatar;
       this.imgsrc=this.imgsrc+avatarUrl;
-    }
+    },
   },
 };
 </script>

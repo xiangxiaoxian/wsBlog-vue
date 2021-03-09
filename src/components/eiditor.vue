@@ -1,13 +1,13 @@
 <template>
 <div>
 <div class="artics">
-  <!-- <div class="article" v-for="item in article"> -->
+ <div class="article" v-for="item in article">
     <div class="article_title" >{{item.title}}</div>
     <div class="article_content">{{item.content}}</div>
     <div class="article_bottom">
       <div class="article_author" >
 
-        <!-- <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+item.user.avatar+'.jpg')"></el-avatar> -->
+        <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+item.user.avatar+'.jpg')"></el-avatar>
         <i v-on:click="toUser(item.userId)">{{item.user.nickName}}</i>
           </div>
       <div class="article_time">发布时间:{{item.pubTime}}</div>
@@ -23,8 +23,8 @@
     </div>
   </div>
   </div>
+</div>
 </template>
-
 <script>
 export default {
   data() {
@@ -54,6 +54,7 @@ export default {
     this.getLoginUserId();
     this.getArticleByUserId();
   },
+
   methods:{
     getArticleByUserId(){
       const _this=this;
@@ -83,32 +84,42 @@ export default {
 </script>
 
 <style scoped>
-.article:hover{
+  .artics{
+    width: 1000px;
+  }
+  .article:hover{
     /* border: 1px solid red; */
     background-color:#F5F6F7;
     border-radius: 2px;
-}
-.article{
-    margin: 30px;
+  }
+  .article{
+    /* margin: 30px; */
     padding: 2px;
-}
-.article_title {
-  font-size: 24px;
-  /* background: red; */
-  /* width: 300px; */
-  border-radius: 4px;
-}
-.article_title:hover {
-  color: orange;
-}
-.article_content {
-  font-size: 18px;
-  color: darkgray;
-  margin: 16px;
-}
-.article_bottom{
-
-    /* width: 300px; */
+  }
+  .article_title {
+    font-size: 24px;
+    /* background: red; */
+    margin: 2px 10px;
+    border-radius: 4px;
+    width: 800px;
+    height: 32px;
+    overflow: hidden;
+  }
+  .article_title:hover {
+    color: orange;
+  }
+  .article_content {
+    font-size: 18px;
+    color: darkgray;
+    margin: 16px 0px 10px 16px;
+    height: 48px;
+    width: 820px;
+    height: 76px;
+    overflow: hidden;
+    text-indent:2em
+  }
+  .article_bottom{
+    width: 800px;
     /* height: 80px; */
     display: flex;
     justify-content: space-between;
@@ -116,12 +127,12 @@ export default {
     padding: 4px;
     /* background-color: yellow; */
     text-align: center;
-}
-.article_time{
+  }
+  .article_time{
     margin-bottom: 0px;
-    /* width: 100px; */
+    width: 200px;
     /* background-color: orange; */
     /* text-align:center; */
     margin: 8px;
-}
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <!-- 新写的页面 -->
-  
-  <div class="main">11111111111
+
+  <div class="main">
     <div class="ownerCenten">
       <div class="ownerCenten_left">
         <!-- 个人信息展示 -->
@@ -23,7 +23,6 @@
         <div class="ownerCentenImgdiv"><img :src="ownerCentenImg" alt="加载失败" width="200px" height="600px"></div>
       </div>
       <div class="ownerCenten_right">
-        <h2>添加博客</h2>
         <Eiditor style="margin:10px 0px"/>
         <Eiditor/>
         <Eiditor/>
