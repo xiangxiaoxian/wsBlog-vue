@@ -15,8 +15,6 @@
       <el-menu-item index="2" style="width: 10%">
         <router-link :to="{ path: '/blog' }">博客</router-link>
       </el-menu-item>
-      <!-- <el-menu-item index="3" style="width: 10%" ><router-link :to="{ path: '/blogdetial' }">详情页</router-link></el-menu-item> -->
-      <!-- <el-menu-item index="4" style="width: 10%" ><router-link :to="{ path: '/search' }">搜索</router-link></el-menu-item> -->
       <el-menu-item index="8" style="width: 10%">
         <router-link :to="{ path: '/aboutus' }">排行</router-link>
       </el-menu-item>
@@ -28,7 +26,7 @@
 
       <!-- <span class=" iconfon icon-sousuo"></span> -->
       <el-menu-item index="6" style="width: 10%">
-        <router-link :to="{ path: '/personalCenter' }">个人中心</router-link>
+        <router-link :to="{ path: '/personalCenter/'}">个人中心</router-link>
       </el-menu-item>
       <el-menu-item class="writeblog" index="7" style="width: 10%">
         <router-link :to="{ path: '/message' }">创作中心</router-link>
@@ -41,14 +39,14 @@
         <el-menu-item
           class="loginSelect"
           style="width: 10%"
-          v-if="this.$store.state.token === ''"
+          v-if="this.$store.getters.getUser === '' ||this.$store.getters.getUser ===null "
         >
           <router-link :to="{ path: '/login' }">登录/注册 </router-link>
         </el-menu-item>
         <el-menu-item
           class="loginSelect"
           style="width: 10%"
-          v-if="this.$store.state.token !== ''"
+          v-if="this.$store.getters.getUser !== ''"
         >
           <el-dropdown>
             <el-menu-item index="avatar">

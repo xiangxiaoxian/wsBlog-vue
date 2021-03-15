@@ -55,17 +55,17 @@ export default new Router({
         keepAlive: true
       }
     },
-    // {
-    //   path: '/blogAdd',
-    //   name: 'blogAdd',
-    //   components: {
-    //     default: BlogAdd,
-    //     header: Header
-    //   },
-    //   meta: {
-    //     keepAlive: true
-    //   }
-    // },
+    {
+      path: '/blogEdit/:blogId',
+      name: 'blogEdit',
+      components: {
+        default: Blog,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
     {
       path: '/personalCenter',
       name: '个人中心',
@@ -104,7 +104,7 @@ export default new Router({
     //   path: '/personalCenter',
     //   name: 'personalCenter',
     //   component: () => import("../views/personalCenter")
-    // }, 
+    // },
     {
       path: '/headerone',
       name: 'headerone',

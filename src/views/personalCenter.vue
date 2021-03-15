@@ -24,8 +24,6 @@
       </div>
       <div class="ownerCenten_right">
         <Eiditor style="margin:10px 0px"/>
-        <Eiditor/>
-        <Eiditor/>
       </div>
     </div>
     <el-dialog

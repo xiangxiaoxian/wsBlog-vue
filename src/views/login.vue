@@ -6,7 +6,7 @@
 
     </div>
     <div class="login">
-      <button class="returnHome" @click="toHome">返回首页</button>
+      <button class="returnHome" @click="toHome">返回</button>
       <div class="login-wrapper">
         <div id="login">
           <img :src="logo" alt="加载失败" style="width: 60px" />
@@ -127,7 +127,7 @@ export default {
     //返回首页
     toHome(){
       const _this = this;
-      _this.$router.push("/home");
+      _this.$router.go(-1);
     }
   },
 };

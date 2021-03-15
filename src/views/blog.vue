@@ -62,9 +62,15 @@ export default {
       defaultData: "preview",
     };
   },
-  mounted() {
+  created() {
     this.getLable();
     this.getSort();
+    this.articleEcho();
+  },
+  watch: {
+    '$route'(to, from) {
+      this.articleEcho(); // 这是我ajax获取用户信息的方法
+    }
   },
   methods: {
     //获取所有标签
@@ -114,10 +120,31 @@ export default {
           this.article={};
           this.checkedLable="";
           this.checkedSort="";
-          _this.$router.push("home");
+          _this.$router.push("/home");
         }
       })
     },
+    articleEcho(){
+      const blogId=this.$route.params.blogId;
+      const _this=this;
+      if (blogId){
+        this.$axios.get('/article/'+blogId).then(res=>{
+          _this.article.id=res.data.data.id;
+          _this.article.userId=res.data.data.userId;
+          _this.article.title=res.data.data.title;
+          _this.article.content=res.data.data.content;
+          _this.checkedSort=res.data.data.sort.id;
+          _this.checkedLable=res.data.data.lable.id;
+        })
+      }else {
+        _this.article.id="";
+        _this.article.userId="";
+        _this.article.title="";
+        _this.article.content="";
+        _this.checkedSort="";
+        _this.checkedLable="";
+      };
+    }
 
   },
 };

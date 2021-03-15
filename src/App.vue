@@ -8,7 +8,7 @@
       </keep-alive>
       <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view>
     </transition>
-    
+
   </div>
 
 
@@ -37,7 +37,6 @@ export default {
     //是否显示头部
     this.currentPath=this.$route.path
     console.log(this.currentPath)
-
   },
   components: {
     Header: header,
