@@ -12,7 +12,7 @@ export default new Vuex.Store({
   mutations: {
     SET_TOKEN: (state,token)=>{
       state.token=token
-      localStorage.setItem("token",token)
+      sessionStorage.setItem("token",token)
     },
     SET_USERINFO: (state,userInfo)=>{
       state.userInfo=userInfo
@@ -22,8 +22,20 @@ export default new Vuex.Store({
       state.userInfo={}
       state.token=''
       sessionStorage.setItem("userInfo",JSON.stringify(''))
+      sessionStorage.setItem("token",'')
       localStorage.setItem("token",'')
-    }
+      localStorage.setItem("userInfo",JSON.stringify(''))
+    },
+    SET_TOKEN_REMEMBER:(state,token)=>{
+      state.token=token
+      sessionStorage.setItem("token",token)
+      localStorage.setItem("token",token)
+    },
+    SET_USERINFO_REMEMBER:(state,userInfo)=>{
+      state.userInfo=userInfo
+      sessionStorage.setItem("userInfo",JSON.stringify(userInfo))
+      localStorage.setItem("userInfo",JSON.stringify(userInfo))
+    },
   },
   getters: {
     //拿到当前登录用户信息

@@ -36,6 +36,7 @@
           class="ChangedialogItemItem"
           label="昵称"
           :label-width="formLabelWidth"
+          style="width: 500px"
         >
           <el-input v-model="user.nickName" auto-complete="off"></el-input>
         </el-form-item>
@@ -66,13 +67,13 @@
     <!--    修改密码模态框-->
     <el-dialog title="修改密码" :visible.sync="dialogTableVisible">
       <el-form>
-        <el-form-item label="原密码" :label-width="formLabelWidth">
+        <el-form-item label="原密码" :label-width="formLabelWidth" style="width: 500px">
           <el-input v-model="oldPassword" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="新密码" :label-width="formLabelWidth">
+        <el-form-item label="新密码" :label-width="formLabelWidth" style="width: 500px">
           <el-input v-model="user.password" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="再次输入" :label-width="formLabelWidth">
+        <el-form-item label="再次输入" :label-width="formLabelWidth" style="width: 500px">
           <el-input v-model="checkedPassword" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -117,7 +118,6 @@
           id: this.$store.getters.getUser.id,
           nickName: "",
           password: "",
-
         },
         oldPassword: "",
         checkedPassword: "",
@@ -125,7 +125,7 @@
         dialogVisible: false,
         dialogFormVisible: false,
         dialogTableVisible: false,
-        formLabelWidth: "120px",
+        formLabelWidth: "100px",
       };
     },
     components: {
@@ -158,7 +158,9 @@
         let fd=new FormData();
         fd.append('file',file);
         const _this=this;
-        _this.$axios.post("/user/avatarUpload/"+this.user.id,fd).then(res=>{
+        _this.$axios.post("/user/avatarUpload/"+this.user.id,fd,{
+          headers: { Authorization: sessionStorage.getItem("token") },
+        }).then(res=>{
           this.$alert(res.data.msg, {
             confirmButtonText: "确定",
           });
@@ -185,7 +187,7 @@
               oldPassword: this.oldPassword,
               user: this.user,
             },{
-              headers: { Authorization: localStorage.getItem("token") },
+              headers: { Authorization: sessionStorage.getItem("token") },
             })
             .then((res) => {
               this.$alert(res.data.msg, {
@@ -198,7 +200,7 @@
         const _this = this;
         _this.$axios
           .post("/user/updateNickName",this.user,{
-            headers: { Authorization: localStorage.getItem("token") },
+            headers: { Authorization: sessionStorage.getItem("token") },
           })
           .then((res) => {
             this.$alert(res.data.msg, {

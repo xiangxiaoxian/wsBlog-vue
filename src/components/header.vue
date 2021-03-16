@@ -46,14 +46,14 @@
         <el-menu-item
           class="loginSelect"
           style="width: 10%"
-          v-if="this.$store.getters.getUser !== ''"
+          v-else
         >
           <el-dropdown>
             <el-menu-item index="avatar">
-              <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+imgsrc+'.jpg')"></el-avatar>
+              <el-avatar  :src="require('E:/wsBlogAvatar/'+imgsrc)"></el-avatar>
             </el-menu-item>
             <el-dropdown-menu slot="dropdown" class="dropdown-menu1">
-              <el-dropdown-item class="el-icon-s-custom"
+              <el-dropdown-item class="el-icon-s-custom" @click.native="mineData"
                 >我的资料</el-dropdown-item
               >
               <el-dropdown-item class="el-icon-s-tools"
@@ -67,6 +67,23 @@
         </el-menu-item>
       </el-menu-item>
     </el-menu>
+    <!--    修改密码模态框-->
+    <el-dialog title="修改密码" :visible.sync="dialogTableVisible">
+      <el-form>
+        <el-form-item label="昵称" :label-width="formLabelWidth" style="width: 500px">
+          <el-input v-model="user.nickName" auto-complete="off" disabled="disabled"></el-input>
+        </el-form-item>
+        <el-form-item label="账号" :label-width="formLabelWidth" style="width: 500px">
+          <el-input v-model="user.username" auto-complete="off" disabled="disabled"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" :label-width="formLabelWidth" style="width: 500px">
+          <el-input v-model="user.email" auto-complete="off" disabled="disabled"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogTableVisible = false">关闭</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -74,18 +91,19 @@
 export default {
   data() {
     return {
-      activeIndex: "1",
-      activeIndex2: "1",
       input4: "",
-      circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      squareUrl:
-        "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
-      sizeList: ["large", "medium", "small"],
       imgsrc: '',
+      dialogTableVisible: false,
+      formLabelWidth: "100px",
+      user: {
+        nickName: "",
+        password: "",
+        email:"",
+      },
     };
   },
   mounted() {
+    this.getUserInfo();
     this.getAvatar();
   },
   methods: {
@@ -99,7 +117,7 @@ export default {
       const _this = this;
       _this.$axios
         .get("/logout", {
-          headers: { Authorization: localStorage.getItem("token") },
+          headers: { Authorization: sessionStorage.getItem("token") },
         })
         .then((res) => {
           if (200 == res.data.code) {
@@ -111,7 +129,21 @@ export default {
     getAvatar(){
       const _this=this;
       let avatarUrl=_this.$store.getters.getUser.avatar;
-      this.imgsrc=this.imgsrc+avatarUrl;
+      if(avatarUrl) {
+        this.imgsrc = this.imgsrc + avatarUrl;
+      }
+    },
+    getUserInfo(){
+      const _this=this;
+      let token=localStorage.getItem("token");
+      if (token!=""){
+        _this.$store.commit("SET_TOKEN", token);
+        _this.$store.commit("SET_USERINFO",JSON.parse(localStorage.getItem("userInfo")));
+      }
+    },
+    mineData(){
+      this.user=JSON.parse(sessionStorage.getItem("userInfo"));
+      this.dialogTableVisible=true;
     },
   },
 };
@@ -211,6 +243,10 @@ a {
   right: 0;
   margin: 0 2px;
   /* background: red; */
+}
+.dialog-footer button {
+  width: 100px;
+  height: 40px;
 }
 </style>
 

@@ -34,6 +34,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
+              <el-checkbox v-model="rememberMe" style="right: 130px;color: #0c0b0b">记住密码</el-checkbox>
               <el-button
                 type="primary"
                 @click="submitForm('user')"
@@ -66,6 +67,7 @@ export default {
       valid: false,
       imgsrc: require("../assets/images/yejing.jpg"),
       logo: require("../assets/images/logo.png"),
+      rememberMe:true
     };
   },
   created() {
@@ -87,8 +89,13 @@ export default {
                 //登录成功，保存token和用户信息到浏览器
                 const jwt = res.headers["authorization"];
                 const userInfo = res.data.data;
-                _this.$store.commit("SET_TOKEN", jwt);
-                _this.$store.commit("SET_USERINFO", userInfo);
+                if (this.rememberMe){
+                  _this.$store.commit("SET_TOKEN_REMEMBER", jwt);
+                  _this.$store.commit("SET_USERINFO_REMEMBER", userInfo);
+                }else {
+                  _this.$store.commit("SET_TOKEN", jwt);
+                  _this.$store.commit("SET_USERINFO", userInfo);
+                }
                 this.user.password="";
                 this.user.username="";
                 _this.$router.push("/home");

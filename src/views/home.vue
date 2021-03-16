@@ -2,7 +2,7 @@
   <div>
     <!-- 头部作为全局组件进行渲染 -->
 
-    <Main></Main>
+   <Main></Main>
   </div>
 </template>
 <script>
@@ -19,7 +19,7 @@
       // Header:header,
       Aside:aside,
       Main:main,
-     
+
     },
     comments: {}
   }

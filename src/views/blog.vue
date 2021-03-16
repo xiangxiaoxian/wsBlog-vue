@@ -69,7 +69,7 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      this.articleEcho(); // 这是我ajax获取用户信息的方法
+      this.articleEcho(); // 这是获取文章信息的方法
     }
   },
   methods: {
@@ -115,6 +115,8 @@ export default {
         article:this.article,
         sortId:this.checkedSort,
         lableId:this.checkedLable
+      },{
+        headers: { Authorization: sessionStorage.getItem("token")},
       }).then(res=>{
         if (200==res.data.code){
           this.article={};

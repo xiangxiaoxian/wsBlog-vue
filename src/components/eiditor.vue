@@ -10,7 +10,7 @@
         <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+item.user.avatar+'.jpg')"></el-avatar>
         <i v-on:click="toUser(item.userId)">{{item.user.nickName}}</i>
           </div>
-      <div class="article_time">发布时间:{{item.pubTime}}</div>
+      <div class="article_time" value-format="yyyy-MM-dd hh:mm:ss">发布时间:{{item.pubTime}}</div>
       <div>
         <i>{{item.browse}}浏览</i>
         <i>{{item.star}}点赞</i>
@@ -72,6 +72,11 @@ export default {
   created() {
     this.getLoginUserId();
     this.getArticleByUserId();
+  },
+  watch: {
+    '$route'(to, from) {
+      this.getArticleByUserId(); // 这是我ajax获取用户信息的方法
+    }
   },
   methods:{
     getArticleByUserId(){

@@ -30,14 +30,7 @@ import footer from "../src/components/footer";
 
 export default {
   name: "App",
-  data(){
-    return{currentPath:'/'}
-  },
-  mounted(){
-    //是否显示头部
-    this.currentPath=this.$route.path
-    console.log(this.currentPath)
-  },
+
   components: {
     Header: header,
     Footer: footer,
