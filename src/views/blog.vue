@@ -156,6 +156,7 @@ export default {
 .article {
   margin: 0 10%;
   background-color: #fff;
+  
 }
 .article_listone  {
   margin: 8px 10px;

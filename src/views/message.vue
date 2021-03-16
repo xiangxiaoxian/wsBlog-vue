@@ -411,8 +411,7 @@ li.current a {
   color: #fff;
 }
 /*blogs*/
-.blogs {
-}
+
 .blogs li {
   overflow: hidden;
   margin-bottom: 20px;
@@ -576,8 +575,7 @@ aside div {
 h2.aside_title {
   padding: 20px;
 }
-.xinqing {
-}
+
 .xinqing ul {
   padding: 0 20px 20px;
 }
@@ -632,8 +630,7 @@ h2.aside_title {
   opacity: 1;
   transform: scale(1.1);
 }
-.paihang {
-}
+
 .paihang ol {
   padding: 0 20px 20px 40px;
 }
@@ -691,8 +688,7 @@ footer p span {
 footer a {
   color: #666;
 }
-.suiyan_list {
-}
+
 .suiyan_list ul {
   overflow: hidden;
 }
@@ -768,8 +764,7 @@ footer a {
   background-size: 48px;
 }
 /*tuijian*/
-.tuijian {
-}
+
 .tuijian ul {
   padding: 0 20px 20px 20px;
 }
@@ -777,8 +772,7 @@ footer a {
   overflow: hidden;
   margin-bottom: 20px;
 }
-.tuijian ul li a {
-}
+
 .tuijian i {
   display: block;
   width: 90px;

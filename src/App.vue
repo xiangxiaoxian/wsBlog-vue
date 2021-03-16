@@ -1,24 +1,41 @@
 <template>
-<div id="app-body">
+  <div id="app-body">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2368587_e8xm0d0e9k.css">
-  <router-view name="header"></router-view>
+    <router-view name="header"></router-view>
+    <el-main style="padding:0px">
     <transition :name="transitionName">
       <keep-alive>
-        <router-view class="view-router" v-if="$route.meta.keepAlive"></router-view>
+       <router-view class="view-router" v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
-      <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view>
+      <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view> 
     </transition>
-
+    </el-main>
+    
   </div>
 
-
-<!-- 原来 -->
-  <!-- <div id="app">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_2368587_9rvaeddnviv.css">
+  <!-- 原来 -->
+  <!-- <div id="app-body">
+    <link
+      rel="stylesheet"
+      href="//at.alicdn.com/t/font_2368587_e8xm0d0e9k.css"
+    />
+     <el-header><Header></Header> </el-header>
     <el-container>
-      <el-header ><Header v-show="currentPath !=='/login'"></Header> </el-header>
-      <el-main><router-view ></router-view></el-main>
-      <el-footer><Footer></Footer> </el-footer>
+      <el-main>
+        <router-view name="header"></router-view>
+        <transition :name="transitionName">
+          <keep-alive>
+            <router-view
+              class="view-router"
+              v-if="$route.meta.keepAlive"
+            ></router-view>
+          </keep-alive>
+          <router-view
+            class="view-router"
+            v-if="!$route.meta.keepAlive"
+          ></router-view>
+        </transition>
+      </el-main>     
     </el-container>
   </div> -->
 </template>
@@ -26,7 +43,6 @@
 <script>
 import header from "../src/components/header";
 import footer from "../src/components/footer";
-
 
 export default {
   name: "App",
@@ -39,25 +55,29 @@ export default {
 </script>
 
 <style>
-#app-body{
-  background-color: #F6F6F6;
+#app-body {
+  background-color: #f6f6f6;
+  min-height: 100vh;
+  
 }
-#app {
-  height: 700px;
+#app{
+  height: 100%;
   width: 100%;
   /*background-color:#F6F6F6 ;*/
-
 }
-a{
+a {
   text-decoration: none;
-
 }
-li{
+li {
   list-style: none;
 }
-*{
+* {
   margin: 0px;
   padding: 0px;
 }
+.view-router {
+  height: 100%;
+}
+
 
 </style>

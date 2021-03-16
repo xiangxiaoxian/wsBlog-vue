@@ -164,8 +164,8 @@ li {
   background-color: #545c64;
   width: 100%;
   height: 60px;
+  text-align: center;
 }
-
 .el-menu-header {
   margin: 0 85px;
   /* height: 40px; */

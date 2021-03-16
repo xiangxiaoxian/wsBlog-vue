@@ -248,9 +248,11 @@ export default {
 </script>
 
 <style scoped>
+
 .main {
   margin: 0 10%;
   background-color: #fff;
+  height: 100vh;
 }
 .first_top {
   /* background-color: yellow; */
@@ -392,11 +394,7 @@ export default {
   /* background-color: red; */
   display: flex;
 }
-.toutiao div {
-  /* border: 1px solid grey; */
-  /* width: 100px; */
-  /* height: 80px; */
-}
+
 .toutiao .toutiao_left {
   /* background-color: fuchsia; */
   font-size: 20px;
@@ -412,10 +410,7 @@ export default {
   width: 300px;
   /* height: 100px; */
 }
-.toutiao .toutiao_centent ul {
-  /* background-color:goldenrod; */
-  /* border: 1px solid red; */
-}
+
 .toutiao .toutiao_centent ul li {
   /* background-color:goldenrod; */
   /* border: 1px solid green; */

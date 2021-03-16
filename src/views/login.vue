@@ -34,7 +34,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-checkbox v-model="rememberMe" style="right: 130px;color: #0c0b0b">记住密码</el-checkbox>
+              <el-checkbox  v-model="rememberMe" style="right: 130px;color: #0c0b0b;">记住密码</el-checkbox>
               <el-button
                 type="primary"
                 @click="submitForm('user')"
@@ -154,7 +154,7 @@ export default {
 
 .login-wrapper img {
   position: absolute;
-  z-index: 1;
+  z-index: -1;
 }
 
 .login-wrapper {
@@ -223,7 +223,7 @@ export default {
 .backgroundAll img {
   width: 100%;
   height: 100%;
-  z-index: -1;
+  /* z-index: -1; */
   position: absolute;
   /* top: 30px; */
   bottom: 0;
