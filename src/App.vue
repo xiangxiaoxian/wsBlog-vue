@@ -3,14 +3,14 @@
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2368587_e8xm0d0e9k.css">
     <router-view name="header"></router-view>
     <el-main style="padding:0px">
-    <transition :name="transitionName">
+    <transition >
       <keep-alive>
        <router-view class="view-router" v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
-      <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view> 
+      <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view>
     </transition>
     </el-main>
-    
+
   </div>
 
   <!-- 原来 -->
@@ -35,7 +35,7 @@
             v-if="!$route.meta.keepAlive"
           ></router-view>
         </transition>
-      </el-main>     
+      </el-main>
     </el-container>
   </div> -->
 </template>
@@ -56,15 +56,10 @@ export default {
 
 <style>
 #app-body {
-  background-color: #f6f6f6;
-  min-height: 100vh;
-  
-}
-#app{
   height: 100%;
   width: 100%;
-  /*background-color:#F6F6F6 ;*/
 }
+
 a {
   text-decoration: none;
 }

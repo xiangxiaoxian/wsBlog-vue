@@ -16,6 +16,10 @@ import ForgotPassword from '../views/forgotPassword'
 
 import personalCenter from '../views/personalCenter'
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 Vue.use(Router)
 export default new Router({
@@ -67,7 +71,7 @@ export default new Router({
       }
     },
     {
-      path: '/personalCenter',
+      path: '/personalCenter/:userId',
       name: '个人中心',
       components: {
         default: personalCenter,
@@ -144,8 +148,8 @@ export default new Router({
       }
     },
     {
-      path: '/Blogdetial',
-      name: '',
+      path: '/blogDetial/:articleId',
+      name: 'blogDetial',
       components: {
         default: Blogdetial,
       },

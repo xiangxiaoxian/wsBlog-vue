@@ -2,12 +2,12 @@
   <div>
     <div class="artics" v-if="articleShow">
       <div class="article" v-for="item in article">
-        <div class="article_title">{{ item.title }}</div>
+        <div class="article_title" v-on:click="toBlogDetial(item.id)">{{ item.title }}</div>
         <div class="article_content">{{ item.content }}</div>
         <div class="article_bottom">
-          <div class="article_author">
-            <el-avatar :size="size" :src="require('E://wsBlogAvatar//'+item.user.avatar+'.jpg')"></el-avatar>
-            <i v-on:click="toUser(item.userId)">{{ item.user.nickName }}</i>
+          <div class="article_author" v-on:click="toUser(item.userId)">
+            <el-avatar :size="size" :src="require('E:/wsBlogAvatar/'+item.user.avatar)"></el-avatar>
+            <i>{{ item.user.nickName }}</i>
           </div>
           <div class="article_time" value-format="yyyy-MM-dd hh:mm:ss">
             发布时间:{{ item.pubTime }}
@@ -81,24 +81,26 @@ export default {
         size: "10",
         total: "0",
       },
-      loginUserId: "",
+      currentUserId: "",
       articleShow: false,
+      loginUserId:this.$store.getters.getUser.id
     };
   },
   created() {
-    this.getLoginUserId();
-    this.getArticleByUserId();
+    this.getCurrentUserId();//获取用户信息
+    this.getArticleByUserId(); // 获取用户文章
   },
   watch: {
     $route(to, from) {
-      this.getArticleByUserId(); // 这是我ajax获取用户信息的方法
+      this.getCurrentUserId();//获取用户信息
+      this.getArticleByUserId(); // 获取用户文章
     },
   },
   methods: {
     getArticleByUserId() {
       const _this = this;
       _this.$axios
-        .post("/article/user/" + this.loginUserId, this.page)
+        .post("/article/user/" + this.currentUserId, this.page)
         .then((res) => {
           if (200 == res.data.code) {
             this.article = res.data.data.records;
@@ -115,13 +117,11 @@ export default {
         });
     },
     toUser(userId) {
-      alert(userId);
       const _this = this;
-      _this.$router.push("/home");
+      _this.$router.push("/personalCenter/"+userId);
     },
-    getLoginUserId() {
-      const _this = this;
-      this.loginUserId = _this.$store.getters.getUser.id;
+    getCurrentUserId() {
+      this.currentUserId=this.$route.params.userId;
     },
     handleSizeChange(val) {
       this.page.size = val;
@@ -169,6 +169,10 @@ export default {
       const _this = this;
       _this.$router.push("/blog");
     },
+    toBlogDetial(articleId){
+      const _this = this;
+      _this.$router.push("/blogDetial/"+articleId);
+    }
   },
 };
 </script>

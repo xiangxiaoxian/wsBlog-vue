@@ -119,10 +119,16 @@ export default {
         headers: { Authorization: sessionStorage.getItem("token")},
       }).then(res=>{
         if (200==res.data.code){
-          this.article={};
+          this.article.title="";
+          this.article.content="";
+          this.article.id="";
+          this.article.userId="";
           this.checkedLable="";
           this.checkedSort="";
-          _this.$router.push("/home");
+          this.$alert(res.data.msg, {
+            confirmButtonText: "确定",
+          });
+          _this.$router.push("/personalCenter");
         }
       })
     },
@@ -156,7 +162,7 @@ export default {
 .article {
   margin: 0 10%;
   background-color: #fff;
-  
+
 }
 .article_listone  {
   margin: 8px 10px;

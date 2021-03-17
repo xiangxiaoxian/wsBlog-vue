@@ -3,9 +3,9 @@
 
   <div class="main">
     <div class="ownerCenten">
-      <div class="ownerCenten_left">
+      <div class="ownerCenten_left" >
         <!-- 个人信息展示 -->
-        <el-menu style="width: 200px">
+        <el-menu style="width: 200px" v-if="currentUserId === String(user.id)">
           <el-menu-item index="1">
             <el-button type="warning" @click="openCenter" class="ChangeOwn"
             >修改资料
@@ -82,28 +82,7 @@
         <el-button type="primary" @click="updatePassword()">确 定</el-button>
       </div>
     </el-dialog>
-    <div class="tagsclous">
-      <h2 class="aside_title">猜你喜欢</h2>
-      <ul>
-        <a href="/">
-          <p>程序人生</p></a
-        ><a href="/">
-        <p>技术文摘</p></a
-      ><a href="/">旅行</a
-      ><a href="/">行万里路</a
-      ><a href="/">女程序员</a
-      ><a href="/">HTML5</a
-      ><a href="/">小清新</a
-      ><a href="/">兴趣梦想</a
-      ><a href="/">美好的事情</a
-      ><a href="/">休闲</a
-      ><a href="/">技术文摘</a
-      ><a href="/">旅行</a
-      ><a href="/">行万里路</a
-      ><a href="/">女程序员</a
-      ><a href="/">互联网营销</a>
-      </ul>
-    </div>
+
   </div>
 </template>
 <script>
@@ -122,6 +101,7 @@
         oldPassword: "",
         checkedPassword: "",
         dialogImageUrl: '',
+        currentUserId:"",
         dialogVisible: false,
         dialogFormVisible: false,
         dialogTableVisible: false,
@@ -130,6 +110,14 @@
     },
     components: {
       Eiditor: eiditor,
+    },
+    created() {
+      this.getCurrentUserId();//获取用户信息
+    },
+    watch: {
+      $route(to, from) {
+        this.getCurrentUserId();//获取用户信息
+      },
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -211,7 +199,11 @@
                this.dialogFormVisible=false;
             }
           });
-      }
+      },
+      //拿到当前路径id
+      getCurrentUserId() {
+        this.currentUserId=this.$route.params.userId;
+      },
     },
   };
 </script>
