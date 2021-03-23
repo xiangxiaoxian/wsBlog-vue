@@ -1,462 +1,233 @@
 <template>
-  <div class="main">
-    <!-- 第一行数据 动态渲染-->
-    <div class="first_top">
-      <div class="first_top_left">
-        <div>
-          <div class="iconfont icon-index"></div>
-          <div>首页</div>
-        </div>
-        <div>
-          <div class="iconfont icon-dongtai1"></div>
-          <div>动态</div>
-        </div>
-        <div>
-          <div class="iconfont icon-paihangbang"></div>
-          <div>排行</div>
-        </div>
-      </div>
-      <div class="first_top_content"></div>
-      <div class="first_top_right">
-        <div v-for="(itemo, indexo) in mian_firstdata" :key="indexo">
-          <span class="first_top_rightfor">{{ itemo }}</span>
-          <span class="first_top_rightfor">{{ itemo }}</span>
-        </div>
-      </div>
-    </div>
-    <!-- <span  class="iconfont  icon-redian"></span> -->
-    <div
-      class="secound_top"
-      v-for="(secounditem, a) in mian_secounddata"
-      :key="a"
-    >
-      <!-- 这里是循环渲染的数据标题 -->
-      <div>
-        <h1>{{ secounditem.title }}</h1>
-        <!-- 热门话题的相关操作页面 -->
-        <div v-if="secounditem.title == '热门话题'">
-          <div class="hottitle">
-            <div class="hottitle1">
-              <span class="span1">投票</span>
-              <span class="span2">11111111</span>
-              <a href="#" class="span3">查看更多</a>
-            </div>
-            <div class="hottitle1">
-              <span>投票</span>
-              <span>11111111</span>
-              <a href="#" class="span3">查看更多</a>
-            </div>
-            <div class="hottitle1">
-              <span>投票</span>
-              <span>11111111</span>
-              <a href="#">查看更多</a>
-            </div>
-            <div>
-              <span>投票</span>
-              <span>11111111</span>
-              <a href="#" class="span3">查看更多</a>
-            </div>
+  <div class="homeMain">
+    <div class="artics">
+      <div class="article" v-for="item in article">
+        <div class="article_title" v-on:click="toBlogDetial(item.id)">{{ item.title }}</div>
+        <div class="article_content">{{ item.title }}</div>
+        <div class="article_bottom">
+          <div class="article_author" v-on:click="toUser(item.userId)">
+            <el-avatar :src="require('E:/wsBlogAvatar/'+item.user.avatar)" class="article-avatar"></el-avatar>
+            <i>{{ item.user.nickName }}</i>
           </div>
-        </div>
-        <div class="toutiao" v-if="secounditem.title == '精选头条'">
-          <!-- 精选头条的相关内容 -->
-          <div class="toutiao_left">
-            <img
-              src="http://soutupian.ip3q.com/d/img/wm23.jpg"
-              alt="加载失败"
-              width="480px"
-              height="180px"
-            />
-            <div>
-              Linux 登陆火星，占有率再超 Windows，<br />NASA 还在 GitHub
-              发布源码教程
-            </div>
+          <div class="article_time" value-format="yyyy-MM-dd hh:mm:ss">
+            发布时间:{{ item.pubTime }}
           </div>
-          <div class="toutiao_centent">
-            <ul class="forlist">
-              <li>
-                <img src="#" alt="" />「1s」即可！用 VS Code 一键玩转 GitHub
-                代码！
-              </li>
-              <li>
-                <img src="#" alt="" />Android 12 预览版发布，64g
-                手机用户：我又活了
-              </li>
-              <li>
-                <img src="#" alt="" />Go 开源库 Excelize 介绍，电子 Excel
-                表格操作强大的库
-              </li>
-            </ul>
-          </div>
-          <div class="toutiao_right">
-            <Slideshow class="picture" />
-          </div>
-        </div>
-
-        <div v-if="secounditem.title == '精彩视频'">
-          <div>左边</div>
           <div>
-            
+            <i>{{ item.browse }}浏览</i>
+            <i>{{ item.star }}点赞</i>
+            <i>{{ item.reply }}评论</i>
           </div>
         </div>
-
-        <div v-if="secounditem.title == '技术团队'">技术团队</div>
-
-        <div v-if="secounditem.title == '会员精选'">会员精选</div>
-         <!-- <Hot/> -->
+        <el-divider></el-divider>
       </div>
-     
-      <!-- <div class="secound_style">
-        <div
-          class="secound_styleson"
-          v-for="(itemfour, id) in mian_styledata"
-          :key="id"
-        >
-          {{ itemfour.title }}
-        </div>
-      </div> -->
-      <!-- 主内容 -->
     </div>
-    <!-- <Slideshow /> -->
-    <Hot/>
-    这里是热
+    <div>
+      <el-pagination
+        class="pageIndex"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="page.current"
+        :page-sizes="[15, 30, 50, 70, 100]"
+        :page-size="page.size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="page.total"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-// import Slideshow from "./slideshow";
-import hot from "./hot";
-import slideshow from "./slideshow.vue";
-import Hot from './hot'
 
-export default {
-  components: {
-    // Slideshow: slideshow,
-    Hot: hot,
-    Slideshow: slideshow, 
-  },
-  data() {
-    return {
-      mian_firstdata: [
-        "Python",
-        "Java",
-        "架构",
-        "人工智能",
-        "移动开发",
-        "程序人生",
-        "计算机基础",
-        "物联网",
-        "前端",
-        "区块链",
-        "游戏开发",
-        "运维",
-        "5G",
-        "音频开发",
-        "研发管理",
-        "信息安全",
-        "考试认证",
-        "数据库",
-        "云计算",
-        "物联网",
-        "前端",
-        "区块链",
-        "游戏开发",
-        "运维",
-      ],
-      mian_secounddata: [
-        {
-          id: 1,
-          title: "热门话题",
-          first_slideshow: require("../assets/images/one.png"),
-          first_slideshow_content: "11111",
-        },
-        {
-          id: 2,
-          title: "精选头条",
-          first_slideshow: require("../assets/images/two.png"),
-          first_slideshow_content: "11111",
-        },
-        // {
-        //   id: 3,
-        //   title: "精彩视频",
-        //   first_slideshow: require("../assets/images/tr.png"),
-        //   first_slideshow_content: "222",
-        // },
-        // {
-        //   id: 4,
-        //   title: "技术团队",
-        //   first_slideshow: require("../assets/images/one.png"),
-        //   first_slideshow_content: "333",
-        // },
-        // {
-        //   id: 5,
-        //   title: "会员精选",
-        //   first_slideshow: require("../assets/images/one.png"),
-        //   first_slideshow_content: "444",
-        // },
-        // {
-        //   id: 6,
-        //   title: "推荐专题",
-        //   first_slideshow: require("../assets/images/one.png"),
-        //   first_slideshow_content: "555",
-        // },
-        // {
-        //   id: 7,
-        //   title: "Python",
-        //   first_slideshow: require("../assets/images/one.png"),
-        // },
-        // {
-        //   id: 8,
-        //   title: "大前端",
-        //   first_slideshow: require("../assets/images/one.png"),
-        // },
-        // {
-        //   id: 9,
-        //   title: "Java",
-        //   first_slideshow: require("../assets/images/one.png"),
-        // },
-      ],
-      
-      solt: [],
-      Imgs: [(require = "")],
-    };
-  },
 
-  methods: {
-    getfirstdata() {
-      let that = this;
-      that
-        .$axios({
-          method: "post",
-          url: "",
-        })
-        .then((res) => {
-          //获取分类表里面的分类名放在首页
-          console.log(res);
-          this.data = res;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  export default {
+    data() {
+      return {
+        article: {
+          id: "",
+          userId: "",
+          title: "",
+          content: "",
+          pubTime: "",
+          star: "",
+          reply: "",
+          browse: "",
+          user: {
+            avatar: "",
+            nickName: "",
+          },
+        },
+        page: {
+          current: 1,
+          size: 15,
+          total: 0,
+        },
+        searchField: "",
+      };
     },
-    getSolt() {
-      console.log(111);
+    created() {
+      this.beforUpdateUrl();
     },
-    //  测试
-  },
-};
+    watch: {
+      '$route':{
+        handler(route){
+          const _this=this;
+          _this.beforUpdateUrl();
+        }
+      }
+    },
+    methods: {
+      getAllArticlesAndPages() {
+        const _this = this;
+        _this.$axios
+          .post("/article", this.page, {
+            params: {searchField: this.searchField}
+          })
+          .then((res) => {
+            if (200 == res.data.code) {
+              this.article = res.data.data.records;
+              this.page.total = res.data.data.total;
+            } else {
+              this.$alert("服务器错误", {
+                confirmButtonText: "确定",
+              });
+              return false;
+            }
+          });
+      },
+      beforUpdateUrl(){
+        if (this.$route.name=='home') {
+          this.getAllArticlesAndPages();
+        }else if(this.$route.name=='sort') {
+          this.getArticlesBySortId();
+        }else if(this.$route.name=='lable'){
+          this.getArticlesByLableId();
+        }
+      },
+      getArticlesBySortId(){
+        const _this=this;
+        const sortId=_this.$route.params.sortId;
+        _this.$axios.post("/sort/"+sortId,this.page).then(res=>{
+          if (200 == res.data.code) {
+            this.article = res.data.data.records;
+            this.page.total = res.data.data.total;
+          } else {
+            this.$alert("服务器错误", {
+              confirmButtonText: "确定",
+            });
+            return false;
+          }
+        })
+      },
+      getArticlesByLableId(){
+        const _this=this;
+        const lableId=_this.$route.params.lableId;
+        _this.$axios.post("/lable/"+lableId,this.page).then(res=>{
+          if (200 == res.data.code) {
+            this.article = res.data.data.records;
+            this.page.total = res.data.data.total;
+          } else {
+            this.$alert("服务器错误", {
+              confirmButtonText: "确定",
+            });
+            return false;
+          }
+        })
+      },
+      toUser(userId) {
+        const _this = this;
+        _this.$router.push("/personalCenter/" + userId);
+      },
+      handleSizeChange(val) {
+        this.page.size = val;
+        this.getAllArticlesAndPages();
+      },
+      handleCurrentChange(val) {
+        this.page.current = val;
+        this.getAllArticlesAndPages();
+      },
+      toBlogDetial(articleId) {
+        const _this = this;
+        _this.$router.push("/blogDetial/" + articleId);
+      }
+    },
+  }
+  ;
 </script>
 
 <style scoped>
 
-.main {
-  margin: 0 10%;
-  background-color: #fff;
-  height: 100vh;
-}
-.first_top {
-  /* background-color: yellow; */
-  /* width: 100px; */
-  /* height: 100px; */
-  display: flex;
-}
+  .homeMain {
+    margin: 40px auto;
+    background-color: #f9f9f9;
+    width: 50%;
+  }
 
-.first_top_left {
-  display: flex;
-  width: 210px;
-  height: 90px;
-}
-.first_top_left div {
-  padding: 4px;
-  margin: 4px;
-  justify-content: space-between;
-}
-.first_top_left .iconfont {
-  font-size: 32px;
-}
+  .article:hover {
+    /* border: 1px solid red; */
+    background-color: #d0d1d2;
+    border-radius: 2px;
+  }
 
-.first_top_left_content span {
-  display: inline-block;
-  margin-top: 30px;
-  padding-bottom: 0px;
-  background-color: blue;
-}
-.icon-index {
-  color: #ff4d4d;
-}
-.icon-dongtai1 {
-  color: #4d77ff;
-}
-.icon-paihang-copy-cop {
-  counter-reset: #ff904d;
-}
+  .article {
+    /* margin: 30px; */
+    padding: 2px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    height: 150px;
+  }
 
-.first_top_left_iconfont {
-  width: 210px;
-  height: 30px;
-}
+  .article_title {
+    font-size: 24px;
+    /* background: red; */
+    margin: 2px 10px;
+    border-radius: 4px;
+    height: 30px;
+    overflow: hidden;
+  }
 
-.first_top_content {
-  width: 1px;
-  /* padding: 10px; */
-  margin: 20px 0px;
-  height: 60px;
-  background-color: rgb(148, 143, 143);
-}
+  .article_title:hover {
+    color: orange;
+  }
 
-.first_top_right {
-  display: flex;
-  /* background-color: red; */
-  width: 100%;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.first_top_rightfor {
-  /* border: 1px solid red; */
-  margin: 20px;
-  display: inline-block;
-  width: 82px;
-  height: 40px;
-}
-.first_top_rightfor:hover {
-  color: #ff904d;
-  font: 16px;
-}
+  .article_content {
+    font-size: 18px;
+    color: darkgray;
+    margin: 4px 0px 10px 8px;
+    height: 20px;
+    width: 820px;
+    overflow: hidden;
+    text-indent: 2em;
+  }
 
-.secound_top {
-  /* height: 200px; */
-  width: 100%;
-  padding: 2px;
-  margin: 0px 8px;
-  display: flex;
-}
-.secound_slideshowfather {
-  background-color: red;
-  width: 40px;
-  height: 40px;
-  /* display: flex; */
-}
+  .article_bottom {
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    padding: 4px;
+    text-align: center;
+    height: 20px;
+    margin-top: 6px;
+  }
 
-.secound_style {
-  /* width: 600px; */
-  height: 140px;
-  /* border: 1px solid red; */
-  /* background-color: red; */
-  /* display: flex; */
-}
+  .article-avatar {
+    height: 20px;
+    width: 20px;
+  }
 
-.secound_styleson {
-  /* display: block; */
-  width: 300px;
-  /* height: 80px; */
-  background-color: khaki;
-  margin: 4px;
-  /* border: 1px solid green; */
-  border-radius: 12px;
-}
-.hottitle {
-  width: 100%;
-  /* height: 80px; */
-  /* background-color: #ff904d; */
-  display: flex;
-}
-.hottitle div {
-  width: 25%;
-  /* width: 300px; */
-  /* height: 80px; */
-  /* background-color:red; */
-  /* border: 1px solid red ; */
-  display: flex;
-  flex-direction: column;
-}
+  .article_time {
+    width: 200px;
+    margin: 8px;
+  }
 
-.hottitle div:hover {
-  /* transform: scale(1.1); */
-  color: #4d77ff;
-}
-.hottitle div span {
-  display: inline-block;
-  width: 200px;
-  padding: 8px;
-}
-.hottitle div .span3 {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  /* padding-right: 0px; */
-  /* margin-left: 100px; */
-  /* margin: 10px 80px; */
-  margin: 0px 0px 0px 100px;
-}
-.toutiao {
-  /* width: 100px; */
-  /* height: 100px; */
-  /* background-color: red; */
-  display: flex;
-}
-
-.toutiao .toutiao_left {
-  /* background-color: fuchsia; */
-  font-size: 20px;
-  /* width: 300px; */
-  /* height: 100px; */
-}
-.toutiao .toutiao_left:hover {
-  color: #ff4d4d;
-}
-
-.toutiao .toutiao_centent {
-  /* background-color:yellow; */
-  width: 300px;
-  /* height: 100px; */
-}
-
-.toutiao .toutiao_centent ul li {
-  /* background-color:goldenrod; */
-  /* border: 1px solid green; */
-  width: 300px;
-  height: 60px;
-  border-radius: 4px;
-  font-size: 18px;
-  margin: 2px;
-  padding: 10px;
-}
-.toutiao .toutiao_centent ul li:hover {
-  color: #ff904d;
-}
-.toutiao_right .picture {
-  width: 380px;
-  height: 300px;
-  /* background-color: red; */
-}
-
-.mainbody {
-  clear: both;
-
-  /* padding-top: 40px; */
-
-  overflow: hidden;
-}
-
-.left {
-  width: 66.666666%;
-
-  float: left;
-
-  padding: 0 15px;
-}
-
-.right {
-  width: 33.333333%;
-
-  float: right;
-
-  padding: 0 15px;
-}
-
-.post-nav {
-  padding: 0 10px;
-
-  margin-bottom: 15px;
-}
+  .pageIndex {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    margin-top: 40px;
+    margin-right: auto;
+  }
+  .article_author:hover{
+    color: red;
+  }
 </style>

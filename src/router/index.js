@@ -8,13 +8,15 @@ import Blog from '../views/blog'
 import Blogdetial from '../views/blogdetial'
 import Login from '../views/login'
 import Register from '../views/register'
-import Owner from '../views/owner'
-import Message from '../views/message'
-
 import Header from '../components/header'
 import ForgotPassword from '../views/forgotPassword'
+import top from '../views/top'
+import Sort from '../views/sort'
+import Search from '../views/search'
+
 
 import personalCenter from '../views/personalCenter'
+import {Main} from "element-ui";
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -28,7 +30,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       components: {
         default: Home,
         header: Header
@@ -39,7 +41,7 @@ export default new Router({
     },
     {
       path: '/home',
-      name: 'Home',
+      name: 'home',
       components: {
         default: Home,
         header: Header
@@ -49,8 +51,30 @@ export default new Router({
       }
     },
     {
+      path: '/sort/:sortId',
+      name: 'sort',
+      components: {
+        default: Sort,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/lable/:lableId',
+      name: 'lable',
+      components: {
+        default: Sort,
+        header: Header
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
       path: '/blog',
-      name: '博客',
+      name: 'blog',
       components: {
         default: Blog,
         header: Header
@@ -72,7 +96,7 @@ export default new Router({
     },
     {
       path: '/personalCenter/:userId',
-      name: '个人中心',
+      name: 'personalCenter',
       components: {
         default: personalCenter,
         header: Header
@@ -104,39 +128,6 @@ export default new Router({
         keepAlive: true
       }
     },
-    // {
-    //   path: '/personalCenter',
-    //   name: 'personalCenter',
-    //   component: () => import("../views/personalCenter")
-    // },
-    {
-      path: '/headerone',
-      name: 'headerone',
-      component: () => import("../components/headerone")
-    },
-    {
-      path: '/owner',
-      name: 'owner',
-      // component: ()=>import("../views/owner")
-      components: {
-        default: Owner,
-        header: Header
-      },
-      meta: {
-        keepAlive: true
-      }
-    },
-    {
-      path: '/message',
-      name: 'owner',
-      components: {
-        default: Message,
-        header: Header
-      },
-      meta: {
-        keepAlive: true
-      }
-    },
     {
       path: '/forgotPassword',
       name: 'forgotPassword',
@@ -152,6 +143,29 @@ export default new Router({
       name: 'blogDetial',
       components: {
         default: Blogdetial,
+        header:Header,
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/top',
+      name: 'top',
+      components: {
+        default: top,
+        header:Header,
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      components: {
+        default: Search,
+        header:Header,
       },
       meta: {
         keepAlive: true

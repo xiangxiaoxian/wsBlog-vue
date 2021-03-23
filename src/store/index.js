@@ -41,7 +41,10 @@ export default new Vuex.Store({
     //拿到当前登录用户信息
     getUser: state => {
       return state.userInfo
-    }
+    },
+    getRole: state => {
+      return state.userInfo.roles;
+    },
   }
 
 })

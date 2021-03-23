@@ -13,31 +13,7 @@
 
   </div>
 
-  <!-- 原来 -->
-  <!-- <div id="app-body">
-    <link
-      rel="stylesheet"
-      href="//at.alicdn.com/t/font_2368587_e8xm0d0e9k.css"
-    />
-     <el-header><Header></Header> </el-header>
-    <el-container>
-      <el-main>
-        <router-view name="header"></router-view>
-        <transition :name="transitionName">
-          <keep-alive>
-            <router-view
-              class="view-router"
-              v-if="$route.meta.keepAlive"
-            ></router-view>
-          </keep-alive>
-          <router-view
-            class="view-router"
-            v-if="!$route.meta.keepAlive"
-          ></router-view>
-        </transition>
-      </el-main>
-    </el-container>
-  </div> -->
+
 </template>
 
 <script>

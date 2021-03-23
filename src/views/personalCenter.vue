@@ -1,9 +1,8 @@
 <template>
   <!-- 新写的页面 -->
-
   <div class="main">
     <div class="ownerCenten">
-      <div class="ownerCenten_left" >
+      <div class="ownerCenten_left">
         <!-- 个人信息展示 -->
         <el-menu style="width: 200px" v-if="currentUserId === String(user.id)">
           <el-menu-item index="1">
@@ -23,7 +22,7 @@
         <div class="ownerCentenImgdiv"><img :src="ownerCentenImg" alt="加载失败" width="200px" height="600px"></div>
       </div>
       <div class="ownerCenten_right">
-        <Eiditor style="margin:10px 0px"/>
+        <Eiditor style="margin:10px 0px" :currentUserId='currentUserId' ref="child1"/>
       </div>
     </div>
     <el-dialog
@@ -89,8 +88,8 @@
   import eiditor from "../components/eiditor";
 
   export default {
+    name:"personalCenter",
     data() {
-
       return {
         ownerCentenImg: require("../assets/images/owner.jpg"),
         user: {
@@ -105,19 +104,26 @@
         dialogVisible: false,
         dialogFormVisible: false,
         dialogTableVisible: false,
+        articleShow: false,
         formLabelWidth: "100px",
+        timer:null,
       };
     },
     components: {
       Eiditor: eiditor,
     },
     created() {
-      this.getCurrentUserId();//获取用户信息
+      this.getCurrentUserId()//获取用户信息
     },
     watch: {
-      $route(to, from) {
-        this.getCurrentUserId();//获取用户信息
-      },
+      '$route':{
+        handler(route){
+          const _this=this;
+          if (route.name==='personalCenter'){
+            _this.getCurrentUserId();
+          }
+        }
+      }
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -200,9 +206,13 @@
             }
           });
       },
-      //拿到当前路径id
+      //拿到当前路径id并查询文章
       getCurrentUserId() {
         this.currentUserId=this.$route.params.userId;
+        clearTimeout(this.timer)
+        this.timer=setTimeout(()=>{
+          this.$refs.child1.getArticleByUserId();
+        },100)
       },
     },
   };
@@ -214,8 +224,9 @@
   }
 
   .main {
-    margin: 0 10%;
-    background-color: #fff;
+    margin: 10px 20%;
+    background-color: #dde2de;
+    width: 60%;
   }
 
   .ownerCenten {

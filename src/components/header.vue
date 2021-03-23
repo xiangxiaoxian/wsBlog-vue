@@ -12,34 +12,24 @@
       <el-menu-item index="1" style="width: 10%">
         <router-link :to="{ path: '/home' }">首页</router-link>
       </el-menu-item>
-      <el-menu-item index="2" style="width: 10%">
-        <router-link :to="{ path: '/blog' }">博客</router-link>
-      </el-menu-item>
       <el-menu-item index="8" style="width: 10%">
-        <router-link :to="{ path: '/aboutus' }">排行</router-link>
+        <router-link :to="{ path: '/top' }">排行</router-link>
       </el-menu-item>
-
-      <el-input class="inputSreach" placeholder="请输入内容" v-model="input4">
-        clearable>
+      <el-input class="inputSreach" placeholder="请输入内容" v-model="searchField" @keyup.enter.native="toSearchArticle(searchField)">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
-
-      <!-- <span class=" iconfon icon-sousuo"></span> -->
-      <el-menu-item index="6" style="width: 10%">
-        <router-link :to="{ path: '/personalCenter/'+this.$store.getters.getUser.id}">个人中心</router-link>
+      <el-menu-item index="2" style="width: 10%" v-if="this.loginStatus">
+        <router-link :to="{ path: '/blog' }">写博客</router-link>
       </el-menu-item>
-      <el-menu-item class="writeblog" index="7" style="width: 10%">
-        <router-link :to="{ path: '/message' }">创作中心</router-link>
+      <el-menu-item index="6" style="width: 10%" v-show="this.loginStatus">
+        <span v-on:click="toPersonalCenter">个人中心</span>
       </el-menu-item>
-      <!--若当前有用户登录，则不展示登录注册字样，展示登录用户头像等信息-->
-
-      <!-- 测试 -->
       <el-menu-item
         >
         <el-menu-item
           class="loginSelect"
           style="width: 10%"
-          v-if="this.$store.getters.getUser === '' ||this.$store.getters.getUser ===null "
+          v-if="!this.loginStatus"
         >
           <router-link :to="{ path: '/login' }">登录/注册 </router-link>
         </el-menu-item>
@@ -49,14 +39,14 @@
           v-else
         >
           <el-dropdown>
-            <el-menu-item index="avatar">
+            <el-menu-item index="7">
               <el-avatar  :src="require('E:/wsBlogAvatar/'+imgsrc)"></el-avatar>
             </el-menu-item>
             <el-dropdown-menu slot="dropdown" class="dropdown-menu1">
               <el-dropdown-item class="el-icon-s-custom" @click.native="mineData"
                 >我的资料</el-dropdown-item
               >
-              <el-dropdown-item class="el-icon-s-tools"
+              <el-dropdown-item class="el-icon-s-tools" v-if="this.$store.getters.getRole.length!==1"
                 >后台管理</el-dropdown-item
               >
               <el-dropdown-item @click.native="logOut"
@@ -67,8 +57,8 @@
         </el-menu-item>
       </el-menu-item>
     </el-menu>
-    <!--    修改密码模态框-->
-    <el-dialog title="修改密码" :visible.sync="dialogTableVisible">
+<!--   个人资料模态框-->
+    <el-dialog title="我的资料" :visible.sync="dialogTableVisible">
       <el-form>
         <el-form-item label="昵称" :label-width="formLabelWidth" style="width: 500px">
           <el-input v-model="user.nickName" auto-complete="off" disabled="disabled"></el-input>
@@ -91,8 +81,8 @@
 export default {
   data() {
     return {
-      input4: "",
-      imgsrc: '',
+      searchField: "",
+      imgsrc: '001.jpg',
       dialogTableVisible: false,
       formLabelWidth: "100px",
       user: {
@@ -100,18 +90,29 @@ export default {
         password: "",
         email:"",
       },
+      loginStatus:false,
     };
   },
-  mounted() {
-    this.getUserInfo();
-    this.getAvatar();
+  created() {
+    this.getLoginStatus();
+  },
+  watch:{
+    '$route': {
+      handler(route) {
+        this.getLoginStatus();
+      }
+    }
   },
   methods: {
+    getLoginStatus(){
+      if (localStorage.getItem("token")){
+        this.getUserInfo();
+        this.getAvatar();
+        this.loginStatus=true;
+      }
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    },
-    handleClick() {
-      alert("button click");
     },
     logOut() {
       const _this = this;
@@ -130,7 +131,7 @@ export default {
       const _this=this;
       let avatarUrl=_this.$store.getters.getUser.avatar;
       if(avatarUrl) {
-        this.imgsrc = this.imgsrc + avatarUrl;
+        this.imgsrc =avatarUrl;
       }
     },
     getUserInfo(){
@@ -145,6 +146,15 @@ export default {
       this.user=JSON.parse(sessionStorage.getItem("userInfo"));
       this.dialogTableVisible=true;
     },
+    toPersonalCenter(){
+      const _this=this;
+      let loginUsreId=_this.$store.getters.getUser.id;
+      _this.$router.push("/personalCenter/"+loginUsreId);
+    },
+    toSearchArticle(searchField){
+      const _this=this;
+      _this.$router.push({path:"/search",query:{searchField:searchField}})
+    }
   },
 };
 </script>
