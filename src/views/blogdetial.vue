@@ -107,7 +107,9 @@
     },
     created() {
       this.getArticleByArticleId();
-      this.loginUserId=this.$store.getters.getUser.id;
+      if(this.$store.getters.getUser) {
+        this.loginUserId = this.$store.getters.getUser.id;
+      }
       this.getCommentsByArticleId();
     },
     watch: {
@@ -116,7 +118,9 @@
           const _this = this;
           if (route.name === 'blogDetial') {
             _this.getArticleByArticleId();
-            this.loginUserId=this.$store.getters.getUser.id;
+            if(this.$store.getters.getUser) {
+              this.loginUserId = this.$store.getters.getUser.id;
+            }
             _this.getCommentsByArticleId();
           }
         }

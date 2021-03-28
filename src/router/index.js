@@ -13,7 +13,10 @@ import ForgotPassword from '../views/forgotPassword'
 import top from '../views/top'
 import Sort from '../views/sort'
 import Search from '../views/search'
-
+import ManagerUser from '../components/managerUser'
+import ManagerHome from '../views/managerHome'
+import ManagerMan from '../components/managerMan'
+import ManagerArticle from "../components/managerArticle";
 
 import personalCenter from '../views/personalCenter'
 import {Main} from "element-ui";
@@ -170,6 +173,49 @@ export default new Router({
       meta: {
         keepAlive: true
       }
+    },
+    {
+      path:'/manager',
+      name:'manager',
+      component: ManagerHome,
+      meta:{
+        keepAlive: true
+      },
+      children: [
+        {
+        // 这里不设置值，是把main作为默认页面
+        path: '/manager',
+        name: 'manager',
+        component: Main,
+        meta:{
+          keepAlive: true
+        },
+      },
+        {
+        path: '/manager/managerUser',
+        name: 'ManagerUser',
+        component: ManagerUser,
+        meta:{
+          keepAlive: true
+        },
+      },
+        {
+          path: '/manager/managerMan',
+          name: 'ManagerMan',
+          component: ManagerMan,
+          meta:{
+            keepAlive: true
+          },
+        },
+        {
+          path: '/manager/managerArticle',
+          name: 'ManagerArticle',
+          component: ManagerArticle,
+          meta:{
+            keepAlive: true
+          },
+        },
+      ]
     },
   ]
 })

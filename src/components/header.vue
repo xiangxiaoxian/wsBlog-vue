@@ -46,7 +46,7 @@
               <el-dropdown-item class="el-icon-s-custom" @click.native="mineData"
                 >我的资料</el-dropdown-item
               >
-              <el-dropdown-item class="el-icon-s-tools" v-if="this.$store.getters.getRole.length!==1"
+              <el-dropdown-item class="el-icon-s-tools" v-if="['管理员','超级管理员'].includes(this.$store.getters.getRole.roleName)" @click.native="toManager"
                 >后台管理</el-dropdown-item
               >
               <el-dropdown-item @click.native="logOut"
@@ -154,6 +154,10 @@ export default {
     toSearchArticle(searchField){
       const _this=this;
       _this.$router.push({path:"/search",query:{searchField:searchField}})
+    },
+    toManager(){
+      const _this=this;
+      _this.$router.push("/manager")
     }
   },
 };
