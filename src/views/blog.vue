@@ -104,7 +104,7 @@
           var url = res.data.data;
           //通过引入对象获取: import {mavonEditor} from ... 等方式引入后，此时$vm即为mavonEditor
           //通过$refs获取: html声明ref : <mavon-editor ref=md ></mavon-editor>， 此时$vm为 this.$refs.md`
-          this.$refs.md.$img2Url(pos, url);
+          this.$refs.md.$img2Url(pos,url);
         })
       },
       //获取所有标签

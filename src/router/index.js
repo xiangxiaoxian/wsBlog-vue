@@ -17,6 +17,10 @@ import ManagerUser from '../components/managerUser'
 import ManagerHome from '../views/managerHome'
 import ManagerMan from '../components/managerMan'
 import ManagerArticle from "../components/managerArticle";
+import ManagerRole from "../components/managerRole";
+import ManagerSort from "../components/managerSort";
+import ManagerLable from "../components/managerLable";
+import ManagerNotice from "../components/managerNotice";
 
 import personalCenter from '../views/personalCenter'
 import {Main} from "element-ui";
@@ -208,9 +212,41 @@ export default new Router({
           },
         },
         {
+          path: '/manager/managerRole',
+          name: 'ManagerRole',
+          component: ManagerRole,
+          meta:{
+            keepAlive: true
+          },
+        },
+        {
           path: '/manager/managerArticle',
           name: 'ManagerArticle',
           component: ManagerArticle,
+          meta:{
+            keepAlive: true
+          },
+        },
+        {
+          path: '/manager/managerSort',
+          name: 'ManagerSort',
+          component: ManagerSort,
+          meta:{
+            keepAlive: true
+          },
+        },
+        {
+          path: '/manager/managerLable',
+          name: 'ManagerLable',
+          component: ManagerLable,
+          meta:{
+            keepAlive: true
+          },
+        },
+        {
+          path: '/manager/managerNotice',
+          name: 'ManagerNotice',
+          component: ManagerNotice,
           meta:{
             keepAlive: true
           },

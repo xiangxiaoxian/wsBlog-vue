@@ -25,7 +25,7 @@
         <el-table-column label="角色" prop="roles.roleName"></el-table-column>
         <el-table-column label="状态" width="200px">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="-1" @change="userStateChanged(scope.row)">
+            <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="-1" active-text="启用" inactive-text="冻结" @change="userStateChanged(scope.row)">
             </el-switch>
           </template>
         </el-table-column>

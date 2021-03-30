@@ -5,7 +5,12 @@
       <div>
         <span>ws后台管理系统</span>
       </div>
-      <el-button type="info" @click="logout">退出</el-button>
+      <div>
+      <i slot="title">{{this.$store.getters.getRole.roleName}}{{this.$store.getters.getUser.nickName}},您好</i>
+      </div>
+      <div>
+        <el-button @click="toHome">返回</el-button>
+      </div>
     </el-header>
     <!-- 页面主体区域 -->
     <el-container>
@@ -16,27 +21,35 @@
         <el-menu background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="isCollapse" default-active="0">
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-user"></i>
               <span slot="title">人员管理</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="1-1" v-on:click="toManagerUser">用户管理</el-menu-item>
               <el-menu-item index="1-2" v-on:click="toManagerMan" v-if="this.$store.getters.getRole.roleName==='超级管理员'">管理员管理</el-menu-item>
+              <el-menu-item index="1-3" v-on:click="toManagerRole" v-if="this.$store.getters.getRole.roleName==='超级管理员'">角色管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-menu"></i>
+              <i class="el-icon-folder"></i>
               <span slot="title">文章管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" v-on:click="toManagerArticle">文章列表</el-menu-item>
+              <el-menu-item index="2-1" v-on:click="toManagerArticle">文章列表</el-menu-item>
+              <el-menu-item index="2-2" v-on:click="toManagerSort">文章分类</el-menu-item>
+              <el-menu-item index="2-3" v-on:click="toManagerLable">文章标签</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-menu-item index="3">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-s-claim"></i>
+              <span slot="title">公告管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="3-1" v-on:click="toManagerNotice">公告列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-aside>
       <!-- 右侧内容主体 -->
@@ -60,6 +73,10 @@
 
     },
     methods: {
+      //导航栏
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      },
       // 点击按钮，切换菜单的折叠与展开
       toggleCollapse() {
         this.isCollapse = !this.isCollapse
@@ -75,6 +92,27 @@
       toManagerArticle(){
         const _this=this;
         _this.$router.push("/manager/managerArticle")
+      },
+      toManagerRole(){
+        const _this=this;
+        _this.$router.push("/manager/managerRole")
+      },
+      toManagerSort(){
+        const _this=this;
+        _this.$router.push("/manager/managerSort")
+      },
+      toManagerLable(){
+        const _this=this;
+        _this.$router.push("/manager/managerLable")
+      },
+      toManagerNotice(){
+        const _this=this;
+        _this.$router.push("/manager/managerNotice")
+      },
+      //回博客
+      toHome(){
+        const _this=this;
+        _this.$router.push("/home")
       },
     }
   }

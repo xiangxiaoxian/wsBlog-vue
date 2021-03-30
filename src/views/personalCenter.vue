@@ -67,13 +67,13 @@
     <el-dialog title="修改密码" :visible.sync="dialogTableVisible">
       <el-form>
         <el-form-item label="原密码" :label-width="formLabelWidth" style="width: 500px">
-          <el-input v-model="oldPassword" auto-complete="off"></el-input>
+          <el-input v-model="oldPassword" auto-complete="off" type="password"></el-input>
         </el-form-item>
         <el-form-item label="新密码" :label-width="formLabelWidth" style="width: 500px">
-          <el-input v-model="user.password" auto-complete="off"></el-input>
+          <el-input v-model="user.password" auto-complete="off" type="password"></el-input>
         </el-form-item>
         <el-form-item label="再次输入" :label-width="formLabelWidth" style="width: 500px">
-          <el-input v-model="checkedPassword" auto-complete="off"></el-input>
+          <el-input v-model="checkedPassword" auto-complete="off" type="password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -187,6 +187,12 @@
               this.$alert(res.data.msg, {
                 confirmButtonText: "确定",
               });
+              _this.dialogTableVisible=false;
+              _this.oldPassword="",
+              _this.checkedPassword="",
+              _this.user.password="",
+              _this.$store.commit("REMOVE_USERINFO");
+              _this.$router.push("/login");
             });
       },
       //修改昵称

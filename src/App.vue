@@ -10,7 +10,7 @@
       <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view>
     </transition>
     </el-main>
-
+    <el-backtop>顶</el-backtop>
   </div>
 
 
@@ -19,6 +19,7 @@
 <script>
 import header from "../src/components/header";
 import footer from "../src/components/footer";
+
 
 export default {
   name: "App",

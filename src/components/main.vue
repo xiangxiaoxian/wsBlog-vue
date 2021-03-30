@@ -1,5 +1,5 @@
 <template>
-  <div class="homeMain">
+  <div class="homeMain" v-if="0!==this.article.length">
     <div class="artics">
       <div class="article" v-for="item in article">
         <div class="article_title" v-on:click="toBlogDetial(item.id)">{{ item.title }}</div>
@@ -34,6 +34,10 @@
       >
       </el-pagination>
     </div>
+  </div>
+  <div v-else style="text-align: center">
+    <h1 style="margin: auto">哦豁，该分类下没有文章哦，快去发布吧</h1>
+    <el-button @click="backPreviousPage" type="primary">返回</el-button>
   </div>
 </template>
 
@@ -149,7 +153,12 @@
       toBlogDetial(articleId) {
         const _this = this;
         _this.$router.push("/blogDetial/" + articleId);
-      }
+      },
+      //回到上一页
+      backPreviousPage(){
+        const _this=this;
+        _this.$router.go(-1);
+      },
     },
   }
   ;

@@ -31,7 +31,7 @@
           </el-form-item>
           <el-form-item prop="password">
             <el-input
-              type="passwordword"
+              type="password"
               v-model="user.password"
               auto-complete="off"
               placeholder="输入密码"
@@ -39,7 +39,7 @@
           </el-form-item>
           <el-form-item prop="checkPass">
             <el-input
-              type="passwordword"
+              type="password"
               v-model="user.checkPass"
               auto-complete="off"
               placeholder="确认密码"

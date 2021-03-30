@@ -27,7 +27,7 @@
             </el-form-item>
             <el-form-item prop="password">
               <el-input
-                type="passwordword"
+                type="password"
                 v-model="user.password"
                 auto-complete="off"
                 placeholder="输入密码"
@@ -81,7 +81,7 @@ export default {
         if (this.valid) {
           const _this = this;
           setTimeout(() => {
-            this.$axios.post("/login", this.user).then((res) => {
+            this.$axios.post("/login", this.user).then(res => {
               if (200 != res.data.code) {
                 alert(res.data.msg);
                 return;
