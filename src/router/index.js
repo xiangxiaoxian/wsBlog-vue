@@ -21,6 +21,7 @@ import ManagerRole from "../components/managerRole";
 import ManagerSort from "../components/managerSort";
 import ManagerLable from "../components/managerLable";
 import ManagerNotice from "../components/managerNotice";
+import ERROR from "../views/error";
 
 import personalCenter from '../views/personalCenter'
 import {Main} from "element-ui";
@@ -87,7 +88,8 @@ export default new Router({
         header: Header
       },
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        login: true,
       }
     },
     {
@@ -98,7 +100,8 @@ export default new Router({
         header: Header
       },
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        login: true,
       }
     },
     {
@@ -183,7 +186,9 @@ export default new Router({
       name:'manager',
       component: ManagerHome,
       meta:{
-        keepAlive: true
+        keepAlive: true,
+        login: true,
+        manager: true,
       },
       children: [
         {
@@ -192,7 +197,9 @@ export default new Router({
         name: 'manager',
         component: Main,
         meta:{
-          keepAlive: true
+          keepAlive: true,
+          login: true,
+          manager: true,
         },
       },
         {
@@ -200,7 +207,9 @@ export default new Router({
         name: 'ManagerUser',
         component: ManagerUser,
         meta:{
-          keepAlive: true
+          keepAlive: true,
+          login: true,
+          manager: true,
         },
       },
         {
@@ -208,7 +217,9 @@ export default new Router({
           name: 'ManagerMan',
           component: ManagerMan,
           meta:{
-            keepAlive: true
+            keepAlive: true,
+            login: true,
+            manager: true,
           },
         },
         {
@@ -216,7 +227,9 @@ export default new Router({
           name: 'ManagerRole',
           component: ManagerRole,
           meta:{
-            keepAlive: true
+            keepAlive: true,
+            login: true,
+            manager: true,
           },
         },
         {
@@ -224,7 +237,9 @@ export default new Router({
           name: 'ManagerArticle',
           component: ManagerArticle,
           meta:{
-            keepAlive: true
+            keepAlive: true,
+            login: true,
+            manager: true,
           },
         },
         {
@@ -232,7 +247,9 @@ export default new Router({
           name: 'ManagerSort',
           component: ManagerSort,
           meta:{
-            keepAlive: true
+            keepAlive: true,
+            login: true,
+            manager: true,
           },
         },
         {
@@ -240,7 +257,9 @@ export default new Router({
           name: 'ManagerLable',
           component: ManagerLable,
           meta:{
-            keepAlive: true
+            keepAlive: true,
+            login: true,
+            manager: true,
           },
         },
         {
@@ -248,10 +267,28 @@ export default new Router({
           name: 'ManagerNotice',
           component: ManagerNotice,
           meta:{
-            keepAlive: true
+            keepAlive: true,
+            login: true,
+            manager: true,
           },
         },
       ]
+    },
+    {
+      path: '/404',
+      name: '404',
+      components: {
+        default: ERROR,
+      },
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: "*",
+      redirect:{
+        name: "404"
+      }
     },
   ]
 })
