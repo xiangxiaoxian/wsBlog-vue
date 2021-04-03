@@ -4,7 +4,7 @@
       <h1 class="homeLeft-title">公告栏</h1>
       <div class="block">
         <el-carousel height="150px" :interval="10000">
-          <el-carousel-item v-for="item in notice" :key="item">
+          <el-carousel-item v-for="item in notice" :key="item.index">
             <h3>{{ item.pubTime }}</h3>
             <h3>{{ item.content }}</h3>
           </el-carousel-item>

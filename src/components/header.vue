@@ -146,7 +146,7 @@
         const _this = this;
         let token = localStorage.getItem("token");
         let tokenSessionStorage = sessionStorage.getItem("token");
-        if (token !== "" && tokenSessionStorage === "") {
+        if (token !== "" && !tokenSessionStorage) {
           let user = JSON.parse(localStorage.getItem("userInfo"));
           _this.$axios.get("/user/" + user.id).then(res => {
             if (user.password !== res.data.data.password) {
@@ -164,6 +164,8 @@
             } else {
               _this.$store.commit("SET_TOKEN", token);
               _this.$store.commit("SET_USERINFO", JSON.parse(localStorage.getItem("userInfo")));
+              this.getAvatar();
+              this.loginStatus = true;
             }
           })
         }

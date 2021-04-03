@@ -41,12 +41,15 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="用户" name="second">
-        <div v-for="item in user">
+        <div v-for="item in user" v-if="user.length!==0">
           <div class="article_author" v-on:click="toUser(item.id)">
-            <el-avatar :src="require('E:/wsBlogAvatar/'+item.avatar)" class="article-avatar"></el-avatar>
-            <i>{{ item.nick_name}}</i>
+            <el-avatar :src="require('E:/wsBlogAvatar/001.jpg')" class="article-avatar"></el-avatar>
+            <i>{{ item.nickName}}</i>
             <el-divider></el-divider>
           </div>
+        </div>
+        <div v-if="user.length===0">
+          <h1>sorry,没有找到用户哦</h1>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -73,11 +76,7 @@
             nickName: "",
           },
         },
-        user: {
-          id: "",
-          nick_name: "",
-          avatar: "",
-        },
+        user: [],
         page: {
           current: 1,
           size: 15,
@@ -126,7 +125,7 @@
         const _this = this;
         const searchField = _this.$route.query["searchField"];
         _this.$axios
-          .post("/user", this.page, {
+          .post("/user/user", this.page, {
             params: {searchField: searchField}
           })
           .then((res) => {

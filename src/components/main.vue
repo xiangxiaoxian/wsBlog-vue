@@ -47,20 +47,7 @@
   export default {
     data() {
       return {
-        article: {
-          id: "",
-          userId: "",
-          title: "",
-          content: "",
-          pubTime: "",
-          star: "",
-          reply: "",
-          browse: "",
-          user: {
-            avatar: "",
-            nickName: "",
-          },
-        },
+        article: [],
         page: {
           current: 1,
           size: 15,
