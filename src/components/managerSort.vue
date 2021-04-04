@@ -5,7 +5,7 @@
       <!-- 搜索与添加区域 -->
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-input placeholder="请输入内容" v-model="searchField" clearable @clear="getSortList">
+          <el-input placeholder="请输入分类名称查找" v-model="searchField" clearable @clear="getSortList">
             <el-button slot="append" icon="el-icon-search" @click="getSortList"></el-button>
           </el-input>
         </el-col>
