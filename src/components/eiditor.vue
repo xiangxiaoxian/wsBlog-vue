@@ -3,7 +3,7 @@
     <div class="artics" v-if="articleShow">
       <div class="article" v-for="item in article">
         <div class="article_title" v-on:click="toBlogDetial(item.id)">{{ item.title }}</div>
-        <div class="article_content">{{ item.title }}</div>
+        <div class="article_content">{{item.title}}</div>
         <div class="article_bottom">
           <div class="article_author" v-on:click="toUser(item.userId)">
             <el-avatar :src="require('E:/wsBlogAvatar/'+item.user.avatar)"></el-avatar>
@@ -69,20 +69,7 @@
     },
     data() {
       return {
-        article: {
-          id: "",
-          userId: "",
-          title: "",
-          content: "",
-          pubTime: "",
-          star: "",
-          reply: "",
-          browse: "",
-          user: {
-            avatar: "",
-            nickName: "",
-          },
-        },
+        article: [],
         page: {
           current: 1,
           size: 10,
@@ -202,13 +189,14 @@
   }
 
   .article_content {
-    font-size: 18px;
+    font-size: 16px;
     color: darkgray;
     margin: 8px 0px 10px 8px;
     height: 20px;
     width: 820px;
     overflow: hidden;
     text-indent: 2em;
+
   }
 
   .article_bottom {

@@ -103,11 +103,13 @@
     },
     created() {
       this.getLoginStatus();
+      this.searchField=this.$route.query["searchField"];
     },
     watch: {
       '$route': {
         handler(route) {
           this.getLoginStatus();
+          this.searchField=this.$route.query["searchField"];
         }
       }
     },

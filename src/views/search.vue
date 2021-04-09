@@ -43,7 +43,7 @@
       <el-tab-pane label="用户" name="second">
         <div v-for="item in user" v-if="user.length!==0">
           <div class="article_author" v-on:click="toUser(item.id)">
-            <el-avatar :src="require('E:/wsBlogAvatar/001.jpg')" class="article-avatar"></el-avatar>
+            <el-avatar :src="require('E:/wsBlogAvatar/'+item.avatar)" class="article-avatar"></el-avatar>
             <i>{{ item.nickName}}</i>
             <el-divider></el-divider>
           </div>

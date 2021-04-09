@@ -95,8 +95,6 @@
       let checkSmscode = (rule, value, callback) => {
         if (value === "") {
           callback(new Error("请输入验证码"));
-        } else if (this.validationCode != value) {
-          callback(new Error("验证码错误"));
         } else {
           callback();
         }
@@ -108,14 +106,6 @@
           callback(new Error("请输入邮箱"));
         } else if (!this.checkEmail(value)) {
           callback(new Error("请输入正确的邮箱格式"));
-        } else {
-          callback();
-        }
-      };
-      // //昵称
-      let checknickName = (rule, value, callback) => {
-        if (value === "") {
-          callback(new Error("请输入账号"));
         } else {
           callback();
         }
@@ -155,8 +145,6 @@
           checkPass: "",
           smscode: "",
           email: "",
-          nickName: "",
-          username: "",
         },
         rules2: {
           password: [{validator: validatePass, trigger: "change"}],
@@ -170,6 +158,23 @@
       }
 
 
+    },
+    created() {
+      this.steps=1;
+      this.user={};
+      this.validationCode="";
+    },
+    watch: {
+      '$route': {
+        handler(route) {
+          const _this = this;
+         if ('forgotPassword'===route.name){
+           this.steps=1;
+           this.user={};
+           this.validationCode="";
+         }
+        }
+      }
     },
     methods: {
       //进度条变化
@@ -220,11 +225,49 @@
       },
       //提交验证码后下一步
       submitSmSCode() {
+        if (!this.user.email){
+          this.$message({
+            message: '请发送验证码',
+            type: 'error'
+          });
+          return false;
+        }else if(this.user.smscode!==this.validationCode){
+          this.$message({
+            message: '验证码错误',
+            type: 'error'
+          });
+          return false;
+        }else if (!this.validationCode) {
+          this.$message({
+            message: '验证码不能为空',
+            type: 'error'
+          });
+          return false;
+        }
         this.stepsAdd();
       },
       //提交新的密码
       submitPassword() {
-        const _this = this;
+       if (!this.user.password){
+         this.$message({
+           message: '请输入新密码',
+           type: 'error'
+         });
+         return false;
+       }else if (!this.user.checkPass){
+         this.$message({
+           message: '请再次输入新密码',
+           type: 'error'
+         });
+         return false;
+       }else if (this.user.password!==this.user.checkPass){
+          this.$message({
+            message: '两次密码不一致，请检查后重新输入',
+            type: 'error'
+          });
+          return false;
+        }
+          const _this = this;
         _this.$axios.put("/user", this.user).then(res => {
           this.$alert(res.data.msg, {
             confirmButtonText: '确定',
