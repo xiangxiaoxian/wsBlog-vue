@@ -15,9 +15,9 @@
                 发布时间:{{ item.pubTime }}
               </div>
               <div>
-                <i>{{ item.browse }}浏览</i>
-                <i>{{ item.star }}点赞</i>
-                <i>{{ item.reply }}评论</i>
+                <i class="el-icon-view">{{ item.browse }}</i>
+                <i class="el-icon-star-on">{{ item.star }}</i>
+                <i class="el-icon-chat-line-round">{{ item.reply }}</i>
               </div>
             </div>
             <el-divider></el-divider>

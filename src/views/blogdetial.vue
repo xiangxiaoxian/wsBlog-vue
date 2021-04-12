@@ -1,12 +1,15 @@
 <template>
   <div>
+    <div class="blogDetail-left">
+      <el-button type="success" @click="previousPage">点此返回哦</el-button>
+    </div>
     <div class="mblog">
       <h1 class="article-title">{{article.title}}</h1>
       <div class="article_message">
         <div class="article_top">
           <i v-on:click="toUser(article.userId)" class="article_author">作者:{{article.user.nickName}}</i>
           <i class="article_pubTime">发布时间:{{article.pubTime}}</i>
-          <i class="article_browse">{{article.browse}}浏览</i>
+          <i class="el-icon-view">{{article.browse}}</i>
         </div>
         <div>
           <i v-on:click="searchBySortId(article.sort.id)" class="article_sort">分类:<span class="sort">{{article.sort.sortName}}</span></i>
@@ -17,24 +20,33 @@
       <div class="markdown-body" v-html="article.content">
       </div>
       <div class="article-star-reply">
-        <i v-on:click="upStar(article.id)" v-if="0===articleStar.status" class="starButton">点赞:{{article.star}}</i>
-        <i v-on:click="lowStar(article.id)" v-else class="starButton">已赞:{{article.star}}</i>
-        <i>评论:{{article.reply}}</i>
+        <i v-on:click="upStar(article.id)" v-if="0===articleStar.status"
+           class="el-icon-star-off">点赞:{{article.star}}</i>
+        <i v-on:click="lowStar(article.id)" v-else class="el-icon-star-on">已赞:{{article.star}}</i>
+        <i class="el-icon-chat-line-round">评论{{article.reply}}</i>
       </div>
       <div class="reply-text">
         <el-input type="textarea" v-model="replyCommentsContent"></el-input>
-        <el-button @click="insertComment">评论</el-button>
+        <el-button @click="insertComment" type="primary">评论</el-button>
       </div>
       <div class="article-reply" v-for="item in comments" v-if="comments.length!==0">
-        <el-avatar :src="require('E:/wsBlogAvatar/'+item.user.avatar)" class="avatar"></el-avatar>
-        <span class="nickName">{{item.user.nickName}}</span>
-        <i class="nickNameReply" v-if="item.parentCommentsNickName!==''">回复</i>
-        <span class="nickName" v-if="item.parentCommentsNickName!==''">{{item.parentCommentsNickName}}</span>
-        <span class="commentContent">:{{item.content}}</span>
-        <span class="article_pubTime">{{item.commentsDate}}</span>
-        <a @click.prevent="openReply(item)">回复</a>
-        <a @click.prevent="openReplyEdit(item)" v-if="item.userId===loginUserId">编辑</a>
-        <a @click.prevent="deleteComment(item.id)" v-if="item.userId===loginUserId">删除</a>
+        <div style="display: inline;">
+          <el-avatar :src="require('E:/wsBlogAvatar/'+item.user.avatar)" class="avatar"
+                     v-on:click="toUser(item.userId)"></el-avatar>
+        </div>
+        <div style="display: inline;">
+          <i class="el-icon-s-custom" style="vertical-align: top" v-if="item.userId===article.userId"></i>
+          <span class="nickName" v-on:click="toUser(item.userId)">{{item.user.nickName}}</span>
+          <i v-if="item.parentCommentsNickName!==''" style="vertical-align: top;font-family: '黑体'">回复</i>
+          <span class="nickName" v-if="item.parentCommentsNickName!==''" v-on:click="toUser(item.userId)">{{item.parentCommentsNickName}}</span>
+          <span class="commentContent">{{item.content}}</span>
+          <span class="article_pubTime" style="vertical-align: top;">{{dateDifference(item.commentsDate)}}</span>
+        </div>
+        <div style="display: inline;float: right;margin-right: 10px">
+          <a @click.prevent="openReply(item)">回复</a>
+          <a @click.prevent="openReplyEdit(item)" v-if="item.userId===loginUserId">编辑</a>
+          <a @click.prevent="deleteComment(item.id)" v-if="item.userId===loginUserId">删除</a>
+        </div>
         <div v-if="confirmation==item.id" class="reply-text">
           <el-input type="textarea" v-model="replyComments.content"></el-input>
           <el-button @click="closeReply">取消</el-button>
@@ -79,18 +91,7 @@
           id: "",
           status: "",
         },
-        comments: {
-          id: "",
-          commentsDate: "",
-          userId: "",
-          content: "",
-          parentCommentsId: "",
-          parentCommentsNickName: "",
-          user: {
-            avatar: "",
-            nickName: "",
-          },
-        },
+        comments: [],
         confirmation: "",
         replyComments: {
           id: "",
@@ -107,7 +108,7 @@
     },
     created() {
       this.getArticleByArticleId();
-      if(this.$store.getters.getUser) {
+      if (this.$store.getters.getUser) {
         this.loginUserId = this.$store.getters.getUser.id;
       }
       this.getCommentsByArticleId();
@@ -118,7 +119,7 @@
           const _this = this;
           if (route.name === 'blogDetial') {
             _this.getArticleByArticleId();
-            if(this.$store.getters.getUser) {
+            if (this.$store.getters.getUser) {
               this.loginUserId = this.$store.getters.getUser.id;
             }
             _this.getCommentsByArticleId();
@@ -149,8 +150,8 @@
       },
       //点赞
       upStar(articleId) {
-        let result=this.checkLogin();
-        if (!result){
+        let result = this.checkLogin();
+        if (!result) {
           return false;
         }
         const _this = this;
@@ -170,8 +171,8 @@
       },
       //取消点赞
       lowStar(articleId) {
-        let result=this.checkLogin();
-        if (!result){
+        let result = this.checkLogin();
+        if (!result) {
           return false;
         }
         const _this = this;
@@ -213,8 +214,8 @@
       //打开回复框
       openReply(comments) {
         const _this = this;
-        let result=this.checkLogin();
-        if (!result){
+        let result = this.checkLogin();
+        if (!result) {
           return false;
         }
         _this.replyComments.parentCommentsId = comments.id;
@@ -246,9 +247,9 @@
       },
       //新增评论
       insertComment() {
-        let result=this.checkLogin();
-        if (!result){
-          this.replyCommentsContent="";
+        let result = this.checkLogin();
+        if (!result) {
+          this.replyCommentsContent = "";
           return false;
         }
         const _this = this;
@@ -299,7 +300,8 @@
             })
           })
       },
-      openReplyEdit(comments) {;
+      openReplyEdit(comments) {
+        ;
         const _this = this;
         _this.confirmation = comments.id
         _this.replyComments.parentCommentsId = comments.parentCommentsId;
@@ -319,34 +321,82 @@
         _this.replyComments.id = "";
         _this.confirmation = 0;
       },
-      checkLogin(){
-        const _this=this;
-        if (_this.$store.getters.getUser==''){
+      checkLogin() {
+        const _this = this;
+        if (_this.$store.getters.getUser == '') {
           _this.$router.push("/login")
           return false;
-        }else {
+        } else {
           return true;
         }
       },
-      searchBySortId(id){
-        const _this=this;
-        _this.$router.push("/sort/"+id)
+      searchBySortId(id) {
+        const _this = this;
+        _this.$router.push("/sort/" + id)
       },
-      searchByLableId(id){
-        const _this=this;
-        _this.$router.push("/lable/"+id)
+      searchByLableId(id) {
+        const _this = this;
+        _this.$router.push("/lable/" + id)
+      },
+      //返回上一页
+      previousPage() {
+        const _this = this;
+        _this.$router.go(-1);
+      },
+      //计算时间差
+      dateDifference(commentsDate) {
+        //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
+        let dateBegin = new Date(commentsDate.replace(/-/g, "/"));//将-转化为/，使用new Date
+        let dateEnd = new Date();//获取当前时间
+        //计算年
+        let yearDiff=dateEnd.getFullYear()-dateBegin.getFullYear();
+        if (yearDiff>0){
+          return yearDiff+"年前"
+        }
+        //计算月
+        let monthDiff=dateEnd.getMonth()-dateBegin.getMonth();
+        if (monthDiff>0){
+          return monthDiff+"月前"
+        }
+        //计算天
+        let dayDiff=dateEnd.getDay()-dateBegin.getDay();
+        if (dayDiff>0){
+          return dayDiff+"天前"
+        }
+        //计算小时
+        let hourDiff=dateEnd.getHours()-dateBegin.getHours();
+        if (hourDiff>0){
+          return hourDiff+"小时前"
+        }
+        //计算分
+        let minuteDiff=dateEnd.getMinutes()-dateBegin.getMinutes();
+        if (minuteDiff>0){
+          return minuteDiff+"分钟前"
+        }
+        //计算秒
+        let secondDiff=dateEnd.getSeconds()-dateBegin.getSeconds();
+        if (secondDiff>0){
+          return secondDiff+"秒前"
+        }
+        return "刚刚"
       },
     },
   };
 </script>
 
 <style scoped>
+  .blogDetail-left {
+    position: fixed;
+    margin-left: 14%;
+    margin-top: 0px;
+  }
+
   .mblog {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
     width: 60%;
     height: 100%;
     margin: auto;
-    background: #b5b5b5;
+    background: #d6d5cd;
   }
 
   .article-title {
@@ -357,7 +407,7 @@
   .article_message {
     height: 60px;
     width: 95%;
-    background: #99a9bf;
+    background: #afc0d6;
     margin-left: 10px;
     margin-top: 10px;
   }
@@ -380,6 +430,7 @@
   .article_pubTime {
     display: inline-block;
     margin-right: 30px;
+    margin-left: 30px;
   }
 
   .article_sort {
@@ -389,48 +440,70 @@
 
   .sort {
     margin-left: 10px;
-    background: #bcbec2;
-    color: #2d3deb;
+    font-family: "黑体";
+    font-size: 18px;
+    color: #6989eb;
   }
 
   .lable {
     margin-left: 10px;
-    background: #bcbec2;
-    color: #2d3deb;
+    font-family: "黑体";
+    font-size: 18px;
+    color: #6989eb;
+  }
+
+  .sort:hover {
+    color: red;
+  }
+
+  .lable:hover {
+    color: red;
   }
 
   .markdown-body {
     margin-top: 20px;
-    margin-left: 10px;
+    margin-left: 50px;
+    width: 90%;
   }
 
   .article-star-reply {
+    background: #cdc7c4;
     margin-top: 20px;
-    margin-left: 10px;
-    width: 200px;
-    background: rgba(168, 158, 172, 0.87);
+    margin-left: 50px;
+    width: 90%;
+    height: 30px;
   }
 
-  .starButton {
+  .el-icon-star-off {
     display: inline-block;
     margin-right: 40px;
   }
 
-  .starButton:hover {
+  .el-icon-star-off:hover {
+    color: red;
+  }
+
+  .el-icon-star-on {
+    display: inline-block;
+    margin-right: 40px;
+  }
+
+  .el-icon-star-on:hover {
     color: red;
   }
 
   .reply-text {
     margin-top: 20px;
-    margin-left: 10px;
+    margin-left: 50px;
     width: 90%;
   }
 
   .article-reply {
     margin-top: 30px;
-    margin-left: 10px;
+    margin-left: 50px;
     width: 90%;
-
+    background: #e3dedd;
+    padding-top: 1%;
   }
 
   .avatar {
@@ -438,14 +511,24 @@
     width: 20px;
   }
 
+  .nickName:hover {
+    color: #af0f09;
+  }
+
   .nickName {
+    vertical-align: top;
     margin-left: 5px;
+    font-family: "黑体";
   }
 
   .commentContent {
+    display: inline-block;
+    vertical-align: top;
+    font-family: "楷体";
+    word-break: break-all;
     margin-left: 10px;
-    display: flow-root;
-
+    font-size: 18px;
+    color: #2c6fc1;
   }
 
   a {
