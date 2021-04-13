@@ -28,6 +28,7 @@
       <div class="reply-text">
         <el-input type="textarea" v-model="replyCommentsContent"></el-input>
         <el-button @click="insertComment" type="primary">评论</el-button>
+        <el-button @click="getCommentsByArticleId" type="success">刷新评论</el-button>
       </div>
       <div class="article-reply" v-for="item in comments" v-if="comments.length!==0">
         <div style="display: inline;">
@@ -37,22 +38,46 @@
         <div style="display: inline;">
           <i class="el-icon-s-custom" style="vertical-align: top" v-if="item.userId===article.userId"></i>
           <span class="nickName" v-on:click="toUser(item.userId)">{{item.user.nickName}}</span>
-          <i v-if="item.parentCommentsNickName!==''" style="vertical-align: top;font-family: '黑体'">回复</i>
-          <span class="nickName" v-if="item.parentCommentsNickName!==''" v-on:click="toUser(item.userId)">{{item.parentCommentsNickName}}</span>
           <span class="commentContent">{{item.content}}</span>
           <span class="article_pubTime" style="vertical-align: top;">{{dateDifference(item.commentsDate)}}</span>
         </div>
         <div style="display: inline;float: right;margin-right: 10px">
-          <a @click.prevent="openReply(item)">回复</a>
+          <a @click.prevent="openReply(item,item.id)">回复</a>
           <a @click.prevent="openReplyEdit(item)" v-if="item.userId===loginUserId">编辑</a>
           <a @click.prevent="deleteComment(item.id)" v-if="item.userId===loginUserId">删除</a>
         </div>
         <div v-if="confirmation==item.id" class="reply-text">
           <el-input type="textarea" v-model="replyComments.content"></el-input>
           <el-button @click="closeReply">取消</el-button>
-          <el-button @click="replyComment(item)">确定</el-button>
+          <el-button @click="replyComment">确定</el-button>
         </div>
         <el-divider></el-divider>
+        <!--回复框-->
+        <div class="article-reply" v-for="items in item.commentsReply" v-if="comments.length!==0">
+          <div style="display: inline;">
+            <el-avatar :src="require('E:/wsBlogAvatar/'+items.user.avatar)" class="avatar"
+                       v-on:click="toUser(items.userId)"></el-avatar>
+          </div>
+          <div style="display: inline;">
+            <i class="el-icon-s-custom" style="vertical-align: top" v-if="items.userId===article.userId"></i>
+            <span class="nickName" v-on:click="toUser(items.userId)">{{items.user.nickName}}</span>
+            <i  style="vertical-align: top;font-family: '黑体'">回复</i>
+            <span class="nickName" >{{items.parentCommentsNickName}}</span>
+            <span class="commentContent">{{items.content}}</span>
+            <span class="article_pubTime" style="vertical-align: top;">{{dateDifference(items.commentsDate)}}</span>
+          </div>
+          <div style="display: inline;float: right;margin-right: 10px">
+            <a @click.prevent="openReply(items,item.id)">回复</a>
+            <a @click.prevent="openReplyEdit(items)" v-if="items.userId===loginUserId">编辑</a>
+            <a @click.prevent="deleteComment(items.id)" v-if="items.userId===loginUserId">删除</a>
+          </div>
+          <div v-if="confirmation==items.id" class="reply-text">
+            <el-input type="textarea" v-model="replyComments.content"></el-input>
+            <el-button @click="closeReply">取消</el-button>
+            <el-button @click="replyComment">确定</el-button>
+          </div>
+          <el-divider></el-divider>
+        </div>
       </div>
     </div>
   </div>
@@ -212,20 +237,20 @@
         })
       },
       //打开回复框
-      openReply(comments) {
+      openReply(comments,parentCommentsId) {
         const _this = this;
         let result = this.checkLogin();
         if (!result) {
           return false;
         }
-        _this.replyComments.parentCommentsId = comments.id;
+        _this.replyComments.parentCommentsId = parentCommentsId;
         _this.replyComments.parentCommentsNickName = comments.user.nickName;
         _this.replyComments.userId = _this.$store.getters.getUser.id;
         _this.replyComments.articleId = _this.$route.params.articleId;
         _this.confirmation = comments.id;
       },
       //回复用户评论
-      replyComment(comments) {
+      replyComment() {
         const _this = this;
         if (0 == _this.replyComments.content.length) {
           this.$message({
@@ -300,8 +325,8 @@
             })
           })
       },
+      //打开编辑评论框
       openReplyEdit(comments) {
-        ;
         const _this = this;
         _this.confirmation = comments.id
         _this.replyComments.parentCommentsId = comments.parentCommentsId;
@@ -311,6 +336,7 @@
         _this.replyComments.content = comments.content;
         _this.replyComments.id = comments.id;
       },
+      //关闭编辑框
       closeReply() {
         const _this = this;
         _this.replyComments.parentCommentsId = "";
@@ -321,6 +347,7 @@
         _this.replyComments.id = "";
         _this.confirmation = 0;
       },
+      //查询登录人
       checkLogin() {
         const _this = this;
         if (_this.$store.getters.getUser == '') {
@@ -330,10 +357,12 @@
           return true;
         }
       },
+      //查询分类文章
       searchBySortId(id) {
         const _this = this;
         _this.$router.push("/sort/" + id)
       },
+      //查询标签文章
       searchByLableId(id) {
         const _this = this;
         _this.$router.push("/lable/" + id)
@@ -380,6 +409,7 @@
         }
         return "刚刚"
       },
+
     },
   };
 </script>
