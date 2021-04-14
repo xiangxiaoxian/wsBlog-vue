@@ -221,7 +221,7 @@
         _this.$axios.get("article/starTrueOrFalse/" + this.article.id,
           {
             params: {
-              userId: this.article.userId
+              userId: this.loginUserId
             }
           }).then(res => {
           _this.articleStar.id = res.data.data.id;
