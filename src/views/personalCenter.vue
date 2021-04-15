@@ -155,11 +155,12 @@
         _this.$axios.post("/user/avatarUpload/"+this.user.id,fd,{
           headers: { Authorization: sessionStorage.getItem("token") },
         }).then(res=>{
-          this.$alert(res.data.msg, {
-            confirmButtonText: "确定",
+          this.$message({
+            message: res.data.msg,
+            type: "success",
           });
-          if (200==res.data.code) {
-            _this.$store.getters.getUser.avatar=res.data.data;
+          if (200===res.data.code) {
+            _this.$store.state.userInfo.avatar=res.data.data;
           }
         })
       },
@@ -169,7 +170,6 @@
       //修改密码
       updatePassword() {
         const _this = this;
-
         if (this.user.password != this.checkedPassword) {
           this.$alert("两次密码不一致", {
             confirmButtonText: "确定",
@@ -184,8 +184,16 @@
               headers: { Authorization: sessionStorage.getItem("token") },
             })
             .then((res) => {
-              this.$alert(res.data.msg, {
-                confirmButtonText: "确定",
+              if (200!==res.data.code){
+                this.$message({
+                  message: res.data.msg,
+                  type: "error",
+                });
+                return false;
+              }
+              this.$message({
+                message: res.data.msg,
+                type: "success",
               });
               _this.dialogTableVisible=false;
               _this.oldPassword="",
@@ -203,8 +211,9 @@
             headers: { Authorization: sessionStorage.getItem("token") },
           })
           .then((res) => {
-            this.$alert(res.data.msg, {
-              confirmButtonText: "确定",
+            this.$message({
+              message: res.data.msg,
+              type: "success",
             });
             if (200==res.data.code){
                _this.$store.getters.getUser.nickName=this.user.nickName ;

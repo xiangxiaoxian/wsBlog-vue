@@ -350,7 +350,7 @@
       //查询登录人
       checkLogin() {
         const _this = this;
-        if (_this.$store.getters.getUser == '') {
+        if (sessionStorage.getItem("token") === ''|| !sessionStorage.getItem("token")) {
           _this.$router.push("/login")
           return false;
         } else {
@@ -390,6 +390,14 @@
         //计算天
         let dayDiff=dateEnd.getDay()-dateBegin.getDay();
         if (dayDiff>0){
+          if (dayDiff<2){
+            //计算小时
+            let hourDiff=dateEnd.getHours()-dateBegin.getHours();
+            if (hourDiff<0){
+              return 24+hourDiff+"小时前"
+            }
+            return dayDiff+"天前"
+          }
           return dayDiff+"天前"
         }
         //计算小时

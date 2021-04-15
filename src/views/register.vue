@@ -83,9 +83,7 @@ export default {
     let checkSmscode = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入验证码"));
-      } else if (this.validationCode != value) {
-        callback(new Error("验证码错误"));
-      } else {
+      }  else {
         callback();
       }
     };
@@ -171,8 +169,9 @@ export default {
       let email = this.user.email;
       if (this.checkEmail(email)) {
         this.$axios.post("/register/validation", this.user).then((res) => {
-          this.$alert(res.data.msg, {
-            confirmButtonText: "确定",
+          this.$message({
+            message: res.data.msg,
+            type: "success",
           });
           if (200 != res.data.code) {
             return false;
@@ -202,6 +201,13 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          if (this.validationCode!==this.user.smscode){
+            //注册失败，验证码错误
+            this.$alert("验证码错误", {
+              confirmButtonText: "确定",
+            });
+            return false;
+          }
           setTimeout(() => {
             this.$axios.put("/register", this.user).then((res) => {
               if (200 != res.data.code) {
@@ -214,6 +220,7 @@ export default {
                 let bool = confirm("注册成功，去登录？"); //确定登录，跳转页面
                 if (bool) {
                   this.$router.push("/login");
+                  this.user ={};
                   return false;
                 } else {
                   this.user = {};
