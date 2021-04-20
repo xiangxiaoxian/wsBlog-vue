@@ -68,13 +68,13 @@
       <div class="demo-drawer__content">
         <el-form>
           <el-form-item label="昵称" :label-width="formLabelWidth" style="width: 500px">
-            <el-input v-model="user.nickName" auto-complete="off" disabled="disabled"></el-input>
+            <el-input v-model="user.nickName" auto-complete="off" :disabled="true" ></el-input>
           </el-form-item>
           <el-form-item label="账号" :label-width="formLabelWidth" style="width: 500px">
-            <el-input v-model="user.username" auto-complete="off" disabled="disabled"></el-input>
+            <el-input v-model="user.username" auto-complete="off" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" :label-width="formLabelWidth" style="width: 500px">
-            <el-input v-model="user.email" auto-complete="off" disabled="disabled"></el-input>
+            <el-input v-model="user.email" auto-complete="off" :disabled="true"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="demo-drawer__footer">
@@ -192,7 +192,7 @@
       cancelForm() {
         this.dialogTableVisible = false;
         clearTimeout(this.timer);
-      }
+      },
     },
   };
 </script>
@@ -302,7 +302,7 @@
   .closeButton {
     width: 60px;
     height: 40px;
-    margin-top: 700px;
+    margin-top: 600px;
     margin-left: 10px;
   }
 </style>

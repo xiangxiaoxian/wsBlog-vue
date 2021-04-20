@@ -88,7 +88,7 @@
   import eiditor from "../components/eiditor";
 
   export default {
-    name:"personalCenter",
+    name: "personalCenter",
     data() {
       return {
         ownerCentenImg: require("../assets/images/owner.jpg"),
@@ -100,13 +100,13 @@
         oldPassword: "",
         checkedPassword: "",
         dialogImageUrl: '',
-        currentUserId:"",
+        currentUserId: "",
         dialogVisible: false,
         dialogFormVisible: false,
         dialogTableVisible: false,
         articleShow: false,
         formLabelWidth: "100px",
-        timer:null,
+        timer: null,
       };
     },
     components: {
@@ -116,10 +116,10 @@
       this.getCurrentUserId()//获取用户信息
     },
     watch: {
-      '$route':{
-        handler(route){
-          const _this=this;
-          if (route.name==='personalCenter'){
+      '$route': {
+        handler(route) {
+          const _this = this;
+          if (route.name === 'personalCenter') {
             _this.getCurrentUserId();
           }
         }
@@ -127,11 +127,11 @@
     },
     methods: {
       handleOpen(key, keyPath) {
-          console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-          console.log(key, keyPath);
-        },
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
+      },
       openCenter() {
         const _this = this;
         this.user.nickName = _this.$store.getters.getUser.nickName;
@@ -148,23 +148,21 @@
         this.dialogVisible = true;
       },
       //上传头像
-      uploadAvatar(file){
-        let fd=new FormData();
-        fd.append('file',file);
-        const _this=this;
-        _this.$axios.post("/user/avatarUpload/"+this.user.id,fd,{
-          headers: { Authorization: sessionStorage.getItem("token") },
-        }).then(res=>{
+      uploadAvatar(file) {
+        let fd = new FormData();
+        fd.append('file', file);
+        const _this = this;
+        _this.$axios.post("/user/avatarUpload/" + this.user.id, fd, {
+          headers: {Authorization: sessionStorage.getItem("token")},
+        }).then(res => {
           this.$message({
             message: res.data.msg,
             type: "success",
           });
-          if (200===res.data.code) {
-            _this.$store.state.userInfo.avatar=res.data.data;
-          }
+
         })
       },
-      hjj(){
+      hjj() {
 
       },
       //修改密码
@@ -176,58 +174,65 @@
           });
           return false;
         }
-          _this.$axios
-            .post("/user/updatePassword", {
-              oldPassword: this.oldPassword,
-              user: this.user,
-            },{
-              headers: { Authorization: sessionStorage.getItem("token") },
-            })
-            .then((res) => {
-              if (200!==res.data.code){
-                this.$message({
-                  message: res.data.msg,
-                  type: "error",
-                });
-                return false;
-              }
+        _this.$axios
+          .post("/user/updatePassword", {
+            oldPassword: this.oldPassword,
+            user: this.user,
+          }, {
+            headers: {Authorization: sessionStorage.getItem("token")},
+          })
+          .then((res) => {
+            if (200 !== res.data.code) {
               this.$message({
                 message: res.data.msg,
-                type: "success",
+                type: "error",
               });
-              _this.dialogTableVisible=false;
-              _this.oldPassword="",
-              _this.checkedPassword="",
-              _this.user.password="",
-              _this.$store.commit("REMOVE_USERINFO");
-              _this.$router.push("/login");
+              return false;
+            }
+            this.$message({
+              message: res.data.msg,
+              type: "success",
             });
+            _this.dialogTableVisible = false;
+            _this.oldPassword = "",
+              _this.checkedPassword = "",
+              _this.user.password = "",
+              _this.$store.commit("REMOVE_USERINFO");
+            _this.$router.push("/login");
+          });
       },
       //修改昵称
-      updateNickName(){
+      updateNickName() {
+        //当前昵称未修改
+        if (this.user.nickName === this.$store.getters.getUser.nickName) {
+          this.dialogFormVisible = false;
+          return false;
+        }
         const _this = this;
         _this.$axios
-          .post("/user/updateNickName",this.user,{
-            headers: { Authorization: sessionStorage.getItem("token") },
+          .post("/user/updateNickName", this.user, {
+            headers: {Authorization: sessionStorage.getItem("token")},
           })
           .then((res) => {
             this.$message({
               message: res.data.msg,
               type: "success",
             });
-            if (200==res.data.code){
-               _this.$store.getters.getUser.nickName=this.user.nickName ;
-               this.dialogFormVisible=false;
+            if (200 === res.data.code) {
+              let user = _this.$store.getters.getUser;
+              user.nickName=this.user.nickName;
+              _this.$store.commit("SET_USERINFO_REMEMBER",user)
+              this.dialogFormVisible = false;
             }
           });
       },
       //拿到当前路径id并查询文章
       getCurrentUserId() {
-        this.currentUserId=this.$route.params.userId;
+        this.currentUserId = this.$route.params.userId;
         clearTimeout(this.timer)
-        this.timer=setTimeout(()=>{
+        this.timer = setTimeout(() => {
           this.$refs.child1.getArticleByUserId();
-        },100)
+        }, 100)
       },
     },
   };
