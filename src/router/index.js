@@ -112,7 +112,8 @@ export default new Router({
         header: Header
       },
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        login: true,
       }
     },
     {

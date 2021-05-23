@@ -17,6 +17,12 @@
             </el-button
             >
           </el-menu-item>
+          <el-menu-item index="3">
+            <el-button type="danger" @click="signOutAccount" class="ChangeOwn"
+            >注销账号
+            </el-button
+            >
+          </el-menu-item>
         </el-menu>
         <!-- 左边图片栏 -->
         <div class="ownerCentenImgdiv"><img :src="ownerCentenImg" alt="加载失败" width="200px" height="600px"></div>
@@ -220,8 +226,8 @@
             });
             if (200 === res.data.code) {
               let user = _this.$store.getters.getUser;
-              user.nickName=this.user.nickName;
-              _this.$store.commit("SET_USERINFO_REMEMBER",user)
+              user.nickName = this.user.nickName;
+              _this.$store.commit("SET_USERINFO_REMEMBER", user)
               this.dialogFormVisible = false;
             }
           });
@@ -233,6 +239,37 @@
         this.timer = setTimeout(() => {
           this.$refs.child1.getArticleByUserId();
         }, 100)
+      },
+      //注销账号
+      signOutAccount() {
+        // 弹框询问用户是否删除数据
+        this.$confirm('此操作将永久注销账号，并且删除相关账号下的所有信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const _this = this;
+          _this.$axios.delete("/user/"+this.currentUserId).then((res)=>{
+            if (200 === res.data.code) {
+              this.$message({
+                message: "注销成功",
+                type: "success",
+              });
+              _this.$store.commit("REMOVE_USERINFO");
+              _this.$router.push("/login")
+            }else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
       },
     },
   };

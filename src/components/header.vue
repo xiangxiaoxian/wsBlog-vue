@@ -115,7 +115,7 @@
     },
     methods: {
       getLoginStatus() {
-        if (localStorage.getItem("token")) {
+        if (sessionStorage.getItem("token")) {
           this.getUserInfo();
           this.getAvatar();
           this.loginStatus = true;
